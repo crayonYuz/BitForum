@@ -10,7 +10,7 @@ interface Props {
   children: ReactNode;
 }
 
-export function Provides({children}: Props) {
+export function Providers({children}: Props) {
   return (
     <ConfigProvider>
       <StyleProvider hashPriority="high">
