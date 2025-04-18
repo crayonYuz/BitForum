@@ -34,7 +34,7 @@ export default function Home() {
                     {coin.name} ({coin.symbol.toUpperCase()})
                   </div>
                   <div className="text-sm">
-                    가격: ${coin.current_price.toLocaleString()} | 24h 변화:{' '}
+                    가격: ₩{coin.current_price.toLocaleString()}원 | 24h 변화:{' '}
                     {coin.price_change_percentage_24h.toFixed(2)}%
                   </div>
                 </div>

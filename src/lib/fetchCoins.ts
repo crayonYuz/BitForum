@@ -6,7 +6,7 @@ export const getCryptoPrices = async (): Promise<Coin[]> => {
     'https://api.coingecko.com/api/v3/coins/markets',
     {
       params: {
-        vs_currency: 'usd',
+        vs_currency: 'krw',
         ids: 'bitcoin,ethereum,ripple,cardano,binancecoin,solana,polkadot,uniswap,chainlink,litecoin',
       },
     },

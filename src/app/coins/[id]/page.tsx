@@ -7,16 +7,16 @@ interface Props {
 }
 
 const tradingViewSymbolMap: Record<string, string> = {
-  bitcoin: 'BINANCE:BTCUSDT',
-  ethereum: 'BINANCE:ETHUSDT',
-  ripple: 'BINANCE:XRPUSDT',
-  cardano: 'BINANCE:ADAUSDT',
-  binancecoin: 'BINANCE:BNBUSDT',
-  solana: 'BINANCE:SOLUSDT',
-  polkadot: 'BINANCE:DOTUSDT',
-  uniswap: 'BINANCE:UNIUSDT',
-  chainlink: 'BINANCE:LINKUSDT',
-  litecoin: 'BINANCE:LTCUSDT',
+  bitcoin: 'UPBIT:BTCKRW',
+  ethereum: 'UPBIT:ETHKRW',
+  ripple: 'UPBIT:XRPKRW',
+  cardano: 'UPBIT:ADAKRW',
+  binancecoin: 'UPBIT:BNBKRW',
+  solana: 'UPBIT:SOLKRW',
+  polkadot: 'UPBIT:DOTKRW',
+  uniswap: 'UPBIT:UNIKRW',
+  chainlink: 'UPBIT:LINKKRW',
+  litecoin: 'UPBIT:LTCKRW',
 };
 
 export default function CoinDetailPage({ params }: Props) {
