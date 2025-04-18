@@ -5,6 +5,9 @@ settings:
   excludeLinksFromLockfile: false
 
 dependencies:
+  '@ant-design/cssinjs':
+    specifier: ^1.23.0
+    version: 1.23.0(react-dom@19.1.0)(react@19.1.0)
   '@tanstack/react-query':
     specifier: ^5.74.4
     version: 5.74.4(react@19.1.0)
