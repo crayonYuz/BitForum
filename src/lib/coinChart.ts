@@ -5,7 +5,7 @@ export const getCoinMarketChart = async (id: string, days = 7) => {
         `https://api.coingecko.com/api/v3/coins/${id}/market_chart`,
         {
             params: {
-                vs_currency: 'usd',
+                vs_currency: 'krw',
                 days,
             }
         }
