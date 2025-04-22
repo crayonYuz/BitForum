@@ -9,31 +9,34 @@ export default function Home() {
   return (
     <>
       <Navbar />
-      <div className="flex min-h-screen gap-6 px-4">
-        <LeftBanner />
+      <div className="flex justify-center">
 
-        <main className="w-full max-w-5xl px-6 py-4 space-y-8">
-          <CoinTickerWidget />
+        <div className="flex min-h-screen gap-6 px-4">
+          {/* <LeftBanner /> */}
 
-          <section>
-            <h2 className="text-xl font-bold mb-2">뉴스</h2>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              <NewsCard title="미국증시" />
-              <NewsCard title="코인 뉴스" />
-              <NewsCard title="환율/금리" />
-            </div>
-          </section>
+          <main className="w-full max-w-6xl px-6 py-4 space-y-8">
+            <CoinTickerWidget />
 
-          <section>
-            <h2 className="text-xl font-bold mb-2">커뮤니티</h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              <CommunityCard title="자유 게시판" />
-              <CommunityCard title="초보자 가이드" />
-            </div>
-          </section>
-        </main>
+            <section>
+              <h2 className="text-xl font-bold mb-2">뉴스</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <NewsCard title="미국증시" />
+                <NewsCard title="코인 뉴스" />
+                <NewsCard title="환율/금리" />
+              </div>
+            </section>
 
-        <RightPanel />
+            <section>
+              <h2 className="text-xl font-bold mb-2">커뮤니티</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <CommunityCard title="자유 게시판" />
+                <CommunityCard title="초보자 가이드" />
+              </div>
+            </section>
+          </main>
+
+          <RightPanel />
+        </div>
       </div>
     </>
   );
