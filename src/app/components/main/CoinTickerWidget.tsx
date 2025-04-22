@@ -15,10 +15,15 @@ export function CoinTickerWidget() {
   if (isError || !data) return <div className="p-2 text-red-500">시세 로딩 실패</div>;
 
   return (
-    <div className="relative overflow-hidden border-b bg-transparent">
-      <div className="animate-ticker flex whitespace-nowrap px-4 py-2">
-        {data.concat(data).map(coin => (
-          <span key={`${coin.id}-${Math.random()}`} className="mr-8 text-sm">
+    <div className="ticker-wrapper overflow-hidden border-b bg-white">
+      <div className="ticker-track flex whitespace-nowrap animate-ticker">
+        {data.map(coin => (
+          <span key={`a-${coin.id}`} className="mr-8 text-sm">
+            {coin.name}: ₩{coin.current_price.toLocaleString()}원
+          </span>
+        ))}
+        {data.map(coin => (
+          <span key={`b-${coin.id}`} className="mr-8 text-sm">
             {coin.name}: ₩{coin.current_price.toLocaleString()}원
           </span>
         ))}
