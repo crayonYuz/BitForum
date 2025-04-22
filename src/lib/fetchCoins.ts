@@ -1,5 +1,5 @@
-import axios from 'axios';
-import {Coin} from '@/types/coin';
+import axios from 'axios'
+import { Coin } from '@/types/coin'
 
 export const getCryptoPrices = async (): Promise<Coin[]> => {
   const res = await axios.get(
@@ -9,8 +9,8 @@ export const getCryptoPrices = async (): Promise<Coin[]> => {
         vs_currency: 'krw',
         ids: 'bitcoin,ethereum,ripple,cardano,binancecoin,solana,polkadot,uniswap,chainlink,litecoin',
       },
-    },
-  );
+    }
+  )
 
   return res.data.map((coin: any) => ({
     id: coin.id,
@@ -19,5 +19,5 @@ export const getCryptoPrices = async (): Promise<Coin[]> => {
     image: coin.image,
     current_price: coin.current_price,
     price_change_percentage_24h: coin.price_change_percentage_24h,
-  }));
-};
+  }))
+}
