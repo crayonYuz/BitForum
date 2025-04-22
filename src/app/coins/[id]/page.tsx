@@ -1,4 +1,4 @@
-import { TradingViewChart } from '../../components/TradingViewChart';
+import { TradingViewChart } from '../../../components/TradingViewChart';
 
 interface Props {
   params: Promise<{

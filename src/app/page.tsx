@@ -1,9 +1,9 @@
 'use client';
 
-import { Navbar } from './components/main/Navbar';
-import { LeftBanner } from './components/main/banner/LeftBanner';
-import { CoinTickerWidget } from './components/main/CoinTickerWidget';
-import { RightPanel } from './components/main/banner/RightPanel';
+import { Navbar } from '../components/main/Navbar';
+import { LeftBanner } from '../components/main/banner/LeftBanner';
+import { CoinTickerWidget } from '../components/main/CoinTickerWidget';
+import { RightPanel } from '../components/main/banner/RightPanel';
 
 export default function Home() {
   return (
