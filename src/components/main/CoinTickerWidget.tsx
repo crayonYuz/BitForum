@@ -19,12 +19,12 @@ export function CoinTickerWidget() {
       <div className="ticker-track flex whitespace-nowrap animate-ticker">
         {data.map(coin => (
           <span key={`a-${coin.id}`} className="mr-8 text-sm">
-            {coin.name}: ₩{coin.current_price.toLocaleString()}원
+            {coin.name}(₩): {coin.current_price.toLocaleString()}
           </span>
         ))}
         {data.map(coin => (
           <span key={`b-${coin.id}`} className="mr-8 text-sm">
-            {coin.name}: ₩{coin.current_price.toLocaleString()}원
+            {coin.name}(₩): {coin.current_price.toLocaleString()}
           </span>
         ))}
       </div>
