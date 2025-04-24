@@ -1,6 +1,6 @@
 export function CoinTableHeader() {
     return (
-        <div className="grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_1fr_1fr_1fr] py-2 px-4 text-xs text-muted-foreground border-b bg-background font-semibold">
+        <div className="h-12 items-center grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_1fr_1fr_1fr_0.2fr] py-2 px-4 text-xs text-muted-foreground border-b bg-background font-semibold">
             <div className="text-right mr-20">#</div>
             <div>코인명</div>
             <div className="text-right">현재가</div>

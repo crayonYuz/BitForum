@@ -36,7 +36,10 @@ export default function Page() {
         <>
             <Navbar />
             <div className="flex px-4 py-6 gap-6">
-                <aside className="w-64 shrink-0 border-r min-h-screen">
+                <aside
+                    className="w-64 shrink-0 border-r overflow-y-auto"
+                    style={{ height: "calc(100vh - 128px)" }}
+                >
                     <Sidebar onSortChange={setSortType} selectedSort={sortType} />
                 </aside>
 
@@ -50,9 +53,9 @@ export default function Page() {
                             </div>
                         </div>
 
-                        <div className="border rounded-md overflow-hidden">
+                        <div className="border rounded-xl overflow-hidden">
                             <CoinTableHeader />
-                            <ScrollArea className="h-[700px]">
+                            <ScrollArea className="h-[610px]">
                                 {isLoading && (
                                     <div className="p-4 text-sm text-muted-foreground">불러오는 중...</div>
                                 )}

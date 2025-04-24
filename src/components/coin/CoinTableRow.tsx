@@ -11,8 +11,8 @@ export function CoinTableRow({ coin, index }: { coin: Coin; index: number }) {
     };
 
     return (
-        <div className="overflow-x-auto">
-            <div className="grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_1fr_1fr_1fr] items-center py-3 px-4 border-b hover:bg-muted transition-colors">
+        <div className="overflow-x-auto cursor-pointer">
+            <div className="grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_1fr_1fr_1fr_0.2fr] items-center py-3 px-4 border-b hover:bg-muted transition-colors">
                 <div className="text-sm text-center text-muted-foreground">{index + 1}</div>
 
                 <div className="flex items-center gap-2">

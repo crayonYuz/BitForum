@@ -15,7 +15,7 @@ export function CoinTable() {
     if (error) return <div className="p-4 text-red-500">데이터를 불러오지 못했습니다.</div>;
 
     return (
-        <ScrollArea className="rounded-lg border">
+        <ScrollArea className="rounded-lx border">
             <Table>
                 <TableHeader>
                     <TableRow>
