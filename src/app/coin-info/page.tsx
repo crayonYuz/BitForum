@@ -10,7 +10,6 @@ import { CoinSearch } from "@/components/coin/CoinSearch";
 import { CoinTableHeader } from "@/components/coin/CoinTableHeader";
 import { CoinTableRow } from "@/components/coin/CoinTableRow";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Sidebar } from "@/components/coin/Sidebar";
 import { sortCoins } from "@/utils/sortCoins";
 import { getTitleAndDescription } from "@/utils/getTitleAndDescription";
@@ -36,16 +35,22 @@ export default function Page() {
     return (
         <>
             <Navbar />
-            <div className="max-w-screen-2xl mx-auto px-4 py-6 flex gap-6">
-                <Sidebar onSortChange={setSortType} />
-                <div className="flex-1">
-                    <Card className="overflow-hidden">
-                        <CardHeader className="border-b space-y-1">
-                            <CardTitle className="text-lg">{title}</CardTitle>
+            <div className="flex px-4 py-6 gap-6">
+                <aside className="w-64 shrink-0 border-r min-h-screen">
+                    <Sidebar onSortChange={setSortType} selectedSort={sortType} />
+                </aside>
+
+                <main className="flex-1 max-w-screen-2xl mx-auto mt-6">
+                    <div className="space-y-4">
+                        <div>
+                            <h2 className="text-lg font-semibold">{title}</h2>
                             <p className="text-sm text-muted-foreground">{description}</p>
-                            <CoinSearch onChange={setQuery} />
-                        </CardHeader>
-                        <CardContent className="p-0">
+                            <div className="mt-2">
+                                <CoinSearch onChange={setQuery} />
+                            </div>
+                        </div>
+
+                        <div className="border rounded-md overflow-hidden">
                             <CoinTableHeader />
                             <ScrollArea className="h-[700px]">
                                 {isLoading && (
@@ -59,9 +64,9 @@ export default function Page() {
                                         <CoinTableRow key={coin.id} coin={coin} index={index} />
                                     ))}
                             </ScrollArea>
-                        </CardContent>
-                    </Card>
-                </div>
+                        </div>
+                    </div>
+                </main>
             </div>
         </>
     );

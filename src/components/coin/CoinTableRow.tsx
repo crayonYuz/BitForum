@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils";
 
 export function CoinTableRow({ coin, index }: { coin: Coin; index: number }) {
     const getColor = (value: number) => {
-        return value > 0 ? "text-red-500" : value < 0 ? "text-blue-500" : "text-gray-500";
+        return value > 0 ? "text-green-500" : value < 0 ? "text-red-500" : "text-gray-500";
     };
 
     const formatVolume = (volume: number) => {
