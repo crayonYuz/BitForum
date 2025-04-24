@@ -13,7 +13,11 @@ export const getCryptoPrices = async (): Promise<Coin[]> => {
     }
   )
 
-  return res.data.map((coin: any) => ({
+  const sortedCoins = res.data.sort(
+    (a: any, b: any) => b.market_cap - a.market_cap
+  )
+
+  return sortedCoins.map((coin: any, index: number) => ({
     id: coin.id,
     name: coin.name,
     symbol: coin.symbol,
@@ -23,6 +27,7 @@ export const getCryptoPrices = async (): Promise<Coin[]> => {
     price_change_percentage_24h: coin.price_change_percentage_24h_in_currency,
     price_change_percentage_7d: coin.price_change_percentage_7d_in_currency,
     total_volume: coin.total_volume,
-    market_cap: coin.market_cap,
+    market_cap: coin.market_cap / 1_000_000,
+    market_cap_rank: index + 1,
   }))
 }

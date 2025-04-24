@@ -1,4 +1,4 @@
-export type SortType = "default" | "gainers" | "losers" | "trending";
+export type SortType = 'default' | 'gainers' | 'losers' | 'trending'
 
 export interface Coin {
   id: string
@@ -11,4 +11,5 @@ export interface Coin {
   price_change_percentage_7d: number
   total_volume: number
   market_cap: number
+  market_cap_rank: number
 }

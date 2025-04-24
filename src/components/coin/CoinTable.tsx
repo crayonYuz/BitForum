@@ -42,19 +42,19 @@ export function CoinTable() {
                             </TableCell>
                             <TableCell className="text-right">{coin.current_price.toLocaleString()}원</TableCell>
                             <TableCell
-                                className={`text-right ${coin.price_change_percentage_1h_in_currency >= 0 ? "text-green-500" : "text-red-500"
+                                className={`text-right ${coin.price_change_percentage_1h_in_currency >= 0 ? "text-blue-500" : "text-red-500"
                                     }`}
                             >
                                 {coin.price_change_percentage_1h_in_currency?.toFixed(2)}%
                             </TableCell>
                             <TableCell
-                                className={`text-right ${coin.price_change_percentage_24h_in_currency >= 0 ? "text-green-500" : "text-red-500"
+                                className={`text-right ${coin.price_change_percentage_24h_in_currency >= 0 ? "text-blue-500" : "text-red-500"
                                     }`}
                             >
                                 {coin.price_change_percentage_24h_in_currency?.toFixed(2)}%
                             </TableCell>
                             <TableCell
-                                className={`text-right ${coin.price_change_percentage_7d_in_currency >= 0 ? "text-green-500" : "text-red-500"
+                                className={`text-right ${coin.price_change_percentage_7d_in_currency >= 0 ? "text-blue-500" : "text-red-500"
                                     }`}
                             >
                                 {coin.price_change_percentage_7d_in_currency?.toFixed(2)}%

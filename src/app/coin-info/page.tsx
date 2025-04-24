@@ -15,7 +15,7 @@ import { Sidebar } from "@/components/coin/Sidebar";
 import { sortCoins } from "@/utils/sortCoins";
 import { getTitleAndDescription } from "@/utils/getTitleAndDescription";
 
-export default function ExchangePage() {
+export default function Page() {
     const { data = [], isLoading, isError } = useQuery({
         queryKey: ["cryptoPrices"],
         queryFn: getCryptoPrices,
@@ -36,7 +36,7 @@ export default function ExchangePage() {
     return (
         <>
             <Navbar />
-            <div className="max-w-7xl mx-auto px-4 py-6 flex gap-6">
+            <div className="max-w-screen-2xl mx-auto px-4 py-6 flex gap-6">
                 <Sidebar onSortChange={setSortType} />
                 <div className="flex-1">
                     <Card className="overflow-hidden">
