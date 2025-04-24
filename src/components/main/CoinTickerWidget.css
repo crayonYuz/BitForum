@@ -1,0 +1,18 @@
+@keyframes ticker {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.ticker-wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.ticker-track {
+  display: inline-flex;
+  animation: ticker 40s linear infinite;
+}

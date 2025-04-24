@@ -1,48 +1,61 @@
 'use client';
 
-import {useQuery} from '@tanstack/react-query';
-import {getCryptoPrices} from '@/lib/fetchCoins';
-import Link from 'next/link';
-import {Coin} from '@/types/coin';
+import { Navbar } from '../components/main/Navbar';
+import { LeftBanner } from '../components/main/banner/LeftBanner';
+import { CoinTickerWidget } from '../components/main/CoinTickerWidget';
+import { RightPanel } from '../components/main/banner/RightPanel';
 
 export default function Home() {
-  const {data, isLoading, isError} = useQuery<Coin[]>({
-    queryKey: ['cryptoPrices'],
-    queryFn: getCryptoPrices,
-    refetchInterval: 10000,
-  });
-
-  if (isLoading) return <div>로딩 중...</div>;
-
-  if (isError) return <div>에러가 발생했습니다.</div>;
-
   return (
-    <main className="p-4">
-      <h1 className="text-2xl font-bold mb-4">💸 코인 시세</h1>
-      <ul>
-        {data?.map(coin => (
-          <li key={coin.id} className="mb-4">
-            <Link href={`/coins/${coin.id}`}>
-              <div className="flex items-center cursor-pointer hover:bg-gray-100 p-2 rounded transition">
-                <img
-                  src={coin.image}
-                  alt={coin.name}
-                  className="w-8 h-8 mr-2"
-                />
-                <div>
-                  <div className="font-semibold">
-                    {coin.name} ({coin.symbol.toUpperCase()})
-                  </div>
-                  <div className="text-sm">
-                    가격: ₩{coin.current_price.toLocaleString()}원 | 24h 변화:{' '}
-                    {coin.price_change_percentage_24h.toFixed(2)}%
-                  </div>
-                </div>
+    <>
+      <Navbar />
+      <div className="flex justify-center">
+
+        <div className="flex min-h-screen gap-6 px-4">
+          {/* <LeftBanner /> */}
+
+          <main className="w-full max-w-6xl px-6 py-4 space-y-8">
+            <CoinTickerWidget />
+
+            <section>
+              <h2 className="text-xl font-bold mb-2">뉴스</h2>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <NewsCard title="미국증시" />
+                <NewsCard title="코인 뉴스" />
+                <NewsCard title="환율/금리" />
               </div>
-            </Link>
-          </li>
-        ))}
-      </ul>
-    </main>
+            </section>
+
+            <section>
+              <h2 className="text-xl font-bold mb-2">커뮤니티</h2>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <CommunityCard title="자유 게시판" />
+                <CommunityCard title="초보자 가이드" />
+              </div>
+            </section>
+          </main>
+
+          <RightPanel />
+        </div>
+      </div>
+    </>
+  );
+}
+
+function NewsCard({ title }: { title: string }) {
+  return (
+    <div className="border rounded p-4 shadow-sm bg-white">
+      <h3 className="font-semibold mb-2">{title}</h3>
+      <p className="text-sm text-gray-500">관련 뉴스가 여기에 표시됩니다.</p>
+    </div>
+  );
+}
+
+function CommunityCard({ title }: { title: string }) {
+  return (
+    <div className="border rounded p-4 shadow-sm bg-white">
+      <h3 className="font-semibold mb-2">{title}</h3>
+      <p className="text-sm text-gray-500">게시글 요약 또는 링크가 여기에 들어갑니다.</p>
+    </div>
   );
 }
