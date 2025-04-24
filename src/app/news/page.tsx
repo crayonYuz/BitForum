@@ -7,7 +7,7 @@ import { TopTabs } from "@/components/TopTabst";
 import { TrendingNews } from "@/components/news/TrendingNews";
 
 
-export default function NewsPage() {
+export default function Page() {
     return (
         <>
             <Navbar />
