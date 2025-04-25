@@ -55,7 +55,9 @@ export function ForumNewsCards() {
                                         height={150}
                                         className="object-cover w-full h-40 mb-4"
                                     />
-                                    <div className="text-center text-sm font-medium">{article.title}</div>
+                                    <div className="text-center text-sm font-medium overflow-hidden whitespace-nowrap text-ellipsis">
+                                        {article.title}
+                                    </div>
                                 </CardContent>
                             </Card>
                         </div>
