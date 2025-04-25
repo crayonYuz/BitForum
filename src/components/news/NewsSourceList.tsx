@@ -1,6 +1,6 @@
 'use client';
 
-import { Card, CardContent } from "../ui/card";
+import { Card, CardContent, CardTitle } from "../ui/card";
 
 export function NewsSourceList({ title }: { title: string }) {
     const sources = [
@@ -11,7 +11,7 @@ export function NewsSourceList({ title }: { title: string }) {
     return (
         <Card className="w-full">
             <CardContent className="space-y-4">
-                <h3 className="text-lg font-semibold pb-1 border-gray-200">{title}</h3>
+                <CardTitle>{title}</CardTitle>
 
                 <ul className="text-sm space-y-2">
                     {sources.map((t, i) => (

@@ -1,6 +1,6 @@
 'use client'
 
-import { Card, CardContent } from "@/components/ui/card"
+import { Card, CardContent, CardTitle } from "@/components/ui/card"
 
 export function RisingTopicsSection({ title }: { title: string }) {
     const topics = [
@@ -14,9 +14,9 @@ export function RisingTopicsSection({ title }: { title: string }) {
     return (
         <Card className="w-full">
             <CardContent className="space-y-4">
-                <h2 className="text-lg font-semibold pb-1 border-gray-200">
+                <CardTitle>
                     {title}
-                </h2>
+                </CardTitle>
 
                 <ul className="text-sm space-y-2">
                     {topics.map((t, i) => (
