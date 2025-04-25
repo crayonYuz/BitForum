@@ -33,6 +33,10 @@ export function ForumNewsCards() {
             title: '$TRUMP, 대통령과의 식사권',
             image: 'https://storage.cobak.co/webp_thumbnails/1745293260575467_22164af347_thumb.webp',
         },
+        {
+            title: '$TRUMP, 대통령과의 식사권',
+            image: 'https://storage.cobak.co/webp_thumbnails/1745293260575467_22164af347_thumb.webp',
+        },
     ];
 
     return (
@@ -64,8 +68,8 @@ export function ForumNewsCards() {
                     </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselPrevious className="ml-12" />
-            <CarouselNext className="mr-12" />
+            <CarouselPrevious className="ml-12 cursor-pointer" />
+            <CarouselNext className="mr-12 cursor-pointer" />
         </Carousel>
     );
 }
