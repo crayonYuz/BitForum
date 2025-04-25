@@ -9,9 +9,9 @@ export function NewsSourceList({ title }: { title: string }) {
     ];
 
     return (
-        <Card className="p-4 bg-white shadow">
+        <Card className="w-full">
             <CardContent className="space-y-4">
-                <h3 className="text-xl font-semibold pb-1 border-b border-gray-200">{title}</h3>
+                <h3 className="text-lg font-semibold pb-1 border-gray-200">{title}</h3>
 
                 <ul className="text-sm space-y-2">
                     {sources.map((t, i) => (

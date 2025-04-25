@@ -14,7 +14,7 @@ export function RisingTopicsSection({ title }: { title: string }) {
     return (
         <Card className="w-full">
             <CardContent className="space-y-4">
-                <h2 className="text-xl font-semibold pb-1 border-b border-gray-200">
+                <h2 className="text-lg font-semibold pb-1 border-gray-200">
                     {title}
                 </h2>
 
