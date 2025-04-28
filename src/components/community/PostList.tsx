@@ -1,28 +1,19 @@
 export const PostList = () => {
     const posts = [
-        {
-            author: "크립토 기자단",
-            title: "트럼프, TRUMP 보유자 만찬 안 올 수도",
-            tags: ["NFT", "-0.07%"],
-            time: "1분 전",
-        },
-        {
-            author: "코인인사이트",
-            title: "XRP 100달러, 싸게 느껴질 날이 온다…",
-            tags: ["XRP", "-0.96%"],
-            time: "6분 전",
-        }
-    ]
+        { title: "비트코인 초보인데 질문 있어요", author: "뉴비123", category: "초보자 가이드", time: "방금 전" },
+        { title: "업비트 거래소 수수료 정리", author: "코인가이드", category: "코인 정보", time: "5분 전" },
+        { title: "오늘 시장 어떰?", author: "자유형", category: "자유게시판", time: "10분 전" },
+    ];
 
     return (
-        <div className="flex-1 flex flex-col space-y-4">
+        <div className="flex flex-col space-y-4">
             {posts.map((post, idx) => (
                 <div key={idx} className="border-b pb-4">
-                    <div className="text-sm text-muted-foreground">{post.time} · {post.author}</div>
+                    <div className="text-xs text-muted-foreground">{post.time} · {post.category}</div>
                     <div className="font-semibold">{post.title}</div>
-                    <div className="text-xs text-muted-foreground mt-1">{post.tags.join(", ")}</div>
+                    <div className="text-xs text-muted-foreground mt-1">작성자: {post.author}</div>
                 </div>
             ))}
         </div>
-    )
+    );
 }

@@ -20,7 +20,10 @@ export function FallingTopicsSection({ title }: { title: string }) {
 
                 <ul className="text-sm space-y-2">
                     {topics.map((t, i) => (
-                        <li key={i} className="hover:underline cursor-pointer">
+                        <li
+                            key={i}
+                            className="cursor-pointer rounded-md px-2 py-1 transition-colors hover:bg-gray-100"
+                        >
                             {i + 1}. {t}
                         </li>
                     ))}
