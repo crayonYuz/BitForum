@@ -28,9 +28,20 @@ export default function Home() {
             <section>
               <h2 className="text-xl font-bold mb-2">뉴스</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <InfoCard title="미국증시" description="관련 뉴스가 여기에 표시됩니다." />
-                <InfoCard title="코인 뉴스" description="관련 뉴스가 여기에 표시됩니다." />
-                <InfoCard title="환율/금리" description="관련 뉴스가 여기에 표시됩니다." />
+                <div className="col-span-1">
+                  <InfoCard title="미국증시" description="관련 뉴스가 여기에 표시됩니다." />
+                </div>
+                <div className="col-span-1">
+                  <InfoCard title="코인 뉴스" description="관련 뉴스가 여기에 표시됩니다." />
+                </div>
+
+                <div className="col-span-1 md:col-span-1">
+                  <iframe
+                    src="https://kr.widgets.investing.com/live-currency-cross-rates?theme=lightTheme&hideTitle=true&roundedCorners=true&pairs=9511,158,159,650"
+                    width="100%"
+                    height="300vh"
+                  />
+                </div>
               </div>
             </section>
 
