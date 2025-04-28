@@ -17,7 +17,7 @@ export default function Page() {
         <div className="flex min-h-screen gap-6 px-4">
           <LeftBanner />
 
-          <main className="w-full max-w-6xl px-6 py-4 space-y-8">
+          <main className="w-full max-w-5xl px-6 py-4 space-y-8">
             <AffiliateProgram />
 
             <CoinTickerWidget />
