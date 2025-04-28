@@ -20,8 +20,8 @@ export function TopTabs() {
     return (
         <Tabs value={tabValue} onValueChange={handleChange}>
             <TabsList>
-                <TabsTrigger value="news">뉴스</TabsTrigger>
-                <TabsTrigger value="community">커뮤니티</TabsTrigger>
+                <TabsTrigger className="cursor-pointer" value="news">뉴스</TabsTrigger>
+                <TabsTrigger className="cursor-pointer" value="community">커뮤니티</TabsTrigger>
             </TabsList>
         </Tabs>
     );

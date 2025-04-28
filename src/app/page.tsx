@@ -1,4 +1,4 @@
-'use client';
+'use client'
 
 import { Navbar } from '../components/main/Navbar';
 import { LeftBanner } from '../components/main/banner/LeftBanner';
@@ -7,17 +7,19 @@ import { RightPanel } from '../components/main/banner/RightPanel';
 import { InfoCard } from '@/components/InfoCard';
 import { SectionTitle } from '@/components/news/SectionTitle';
 import { ForumNewsCards } from '@/components/main/ForumNewsCard';
+import { AffiliateProgram } from '@/components/affiliate/AffiliateProgram';
 
-export default function Home() {
+export default function Page() {
   return (
     <>
       <Navbar />
-      <div className="flex justify-center">
-
+      <div className="flex justify-center pt-14">
         <div className="flex min-h-screen gap-6 px-4">
-          {/* <LeftBanner /> */}
+          <LeftBanner />
 
           <main className="w-full max-w-6xl px-6 py-4 space-y-8">
+            <AffiliateProgram />
+
             <CoinTickerWidget />
 
             <section>
@@ -34,7 +36,6 @@ export default function Home() {
                 <div className="col-span-1">
                   <InfoCard title="코인 뉴스" description="관련 뉴스가 여기에 표시됩니다." />
                 </div>
-
                 <div className="col-span-1 md:col-span-1">
                   <iframe
                     src="https://kr.widgets.investing.com/live-currency-cross-rates?theme=lightTheme&hideTitle=true&roundedCorners=true&pairs=9511,158,159,650"
