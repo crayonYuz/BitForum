@@ -19,27 +19,28 @@ export default function Page() {
     return (
         <>
             <Navbar />
-            <main className="max-w-7xl mx-auto px-4 py-6 space-y-6 pt-20 relative">
-                <section className="space-y-4">
-                    <AffiliateBanner />
-                </section>
+            <main className="max-w-7xl mx-auto px-4 py-6 lg:flex lg:gap-6 pt-20">
+                <div className="lg:w-2/3 space-y-6">
+                    <section className="space-y-4">
+                        <AffiliateBanner />
+                    </section>
 
-                <div>
-                    <h2 className="text-2xl font-semibold text-gray-800 mb-4">커뮤니티</h2>
-                </div>
-
-                <div>
-                    <CommunityTabs />
-                </div>
-
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
-                    <div className="lg:col-span-8 space-y-6">
-                        <PostList />
+                    <div>
+                        <h2 className="text-2xl font-semibold text-gray-800 mb-4">커뮤니티</h2>
                     </div>
-                    <aside className="lg:col-span-4 space-y-6 sticky top-10">
-                        <SidePanel />
-                    </aside>
+
+                    <div>
+                        <CommunityTabs />
+                    </div>
+
+                    <section className="space-y-4">
+                        <PostList />
+                    </section>
                 </div>
+
+                <aside className="lg:w-1/4 space-y-6">
+                    <SidePanel />
+                </aside>
 
                 <Button
                     onClick={handleWriteClick}

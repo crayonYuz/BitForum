@@ -7,7 +7,7 @@ import { SectionTitle } from "@/components/news/SectionTitle";
 import { BitforumNewsList } from "@/components/news/BitforumNewsList";
 import { RisingTopicsSection } from "@/components/news/RisingTopicsSection";
 import { FallingTopicsSection } from "@/components/news/FallingTopicsSection";
-import { TopTabs } from "@/components/TopTabst";
+import { AffiliateBanner } from "@/components/affiliate/AffiliateBanner";
 
 export default function Page() {
     return (
@@ -16,6 +16,7 @@ export default function Page() {
             <main className="max-w-7xl mx-auto px-4 py-6 lg:flex lg:gap-6 pt-20">
                 <div className="lg:w-2/3 space-y-6">
                     <section className="space-y-4">
+                        <AffiliateBanner />
                         <SectionTitle title="비트포럼 뉴스" />
                         <BitforumNewsList />
                     </section>
