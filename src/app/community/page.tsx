@@ -1,41 +1,55 @@
 'use client'
 
+import { useState } from "react";
 import { Navbar } from "@/components/main/Navbar";
-import { PostList } from "@/components/community/PostList";
 import { SidePanel } from "@/components/community/SidePanel";
 import { Button } from "@/components/ui/button";
 import { Edit } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { AffiliateBanner } from "@/components/affiliate/AffiliateBanner";
 import { CommunityTabs } from "@/components/community/CommunityTabs";
+import { CommunityData } from "@/lib/commnuityData";
+import { CommunityItem } from "@/components/community/CommuityItem";
 
 export default function Page() {
+    const [selectedTab, setSelectedTab] = useState("전체");
+    const tabs = ["전체", "자유게시판", "초보자 가이드", "공지및이벤트"];
+
     const router = useRouter();
 
     const handleWriteClick = () => {
         router.push("/writing");
     };
 
+    const filteredCommunity = selectedTab === "전체"
+        ? CommunityData
+        : CommunityData.filter((item) => item.categoryLabel === selectedTab);
+
     return (
-        <>
+        <div className="bg-white min-h-screen text-gray-900 pt-6">
             <Navbar />
-            <main className="max-w-7xl mx-auto px-4 py-6 lg:flex lg:gap-6 pt-20">
+
+            <div className="max-w-7xl mx-auto px-4 pt-14 lg:flex lg:gap-6">
                 <div className="lg:w-2/3 space-y-6">
-                    <section className="space-y-4">
-                        <AffiliateBanner />
-                    </section>
+                    <AffiliateBanner />
 
-                    <div>
-                        <h2 className="text-2xl font-semibold text-gray-800 mb-4">커뮤니티</h2>
+                    <h2 className="text-2xl font-semibold text-gray-800">커뮤니티</h2>
+
+                    <CommunityTabs
+                        tabs={tabs}
+                        selectedTab={selectedTab}
+                        onTabChange={setSelectedTab}
+                    />
+
+                    <div className="space-y-4">
+                        {filteredCommunity.length > 0 ? (
+                            <CommunityItem posts={filteredCommunity} />
+                        ) : (
+                            <div className="text-center text-gray-400 py-10">
+                                선택한 카테고리에 게시글이 없습니다.
+                            </div>
+                        )}
                     </div>
-
-                    <div>
-                        <CommunityTabs />
-                    </div>
-
-                    <section className="space-y-4">
-                        <PostList />
-                    </section>
                 </div>
 
                 <aside className="lg:w-1/4 space-y-6">
@@ -48,7 +62,7 @@ export default function Page() {
                 >
                     <Edit size={24} />
                 </Button>
-            </main>
-        </>
+            </div>
+        </div>
     );
 }

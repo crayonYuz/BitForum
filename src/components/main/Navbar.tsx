@@ -13,7 +13,7 @@ export function Navbar() {
         <header className="w-full h-14 border-b bg-white text-black px-4 py-2 flex items-center justify-between fixed top-0 left-0 right-0 z-50">
             <div className="flex items-center gap-6">
                 <Link href="/" passHref>
-                    <div className="text-xl text-blue-600">비트포럼</div>
+                    <div className="text-xl font-bold text-blue-600">비트포럼</div>
                 </Link>
                 <nav className="flex gap-4 mx-auto">
                     <Link href="/" passHref>
@@ -61,19 +61,19 @@ export function Navbar() {
 
             <div>
                 {!session ? (
-                    <>
-                        <Link href="/login" passHref>
-                            <Button variant="ghost" className={`text-base cursor-pointer ${pathname === "/login" ? "text-blue-600" : "text-gray-500"} hover:bg-transparent hover:text-blue-600`}>로그인</Button>
-                        </Link>
-                        <Link href="/signup" passHref>
-                            <Button variant="ghost" className={`text-base cursor-pointer ${pathname === "/signup" ? "text-blue-600" : "text-gray-500"} hover:bg-transparent hover:text-blue-600`}>회원가입</Button>
-                        </Link>
-                    </>
+                    <Link href="/login" passHref>
+                        <Button
+                            variant="ghost"
+                            className={`text-base cursor-pointer ${pathname === "/login" ? "text-blue-600" : "text-gray-500"} hover:bg-transparent hover:text-blue-600`}
+                        >
+                            로그인
+                        </Button>
+                    </Link>
                 ) : (
                     <Button
                         variant="ghost"
                         onClick={() => signOut({ callbackUrl: '/' })}
-                        className={`text-base cursor-pointer ${pathname === "/login" ? "text-blue-600" : "text-gray-500"} hover:bg-transparent hover:text-blue-600`}
+                        className={`text-base cursor-pointer text-gray-500 hover:bg-transparent hover:text-blue-600`}
                     >
                         로그아웃
                     </Button>
