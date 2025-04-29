@@ -35,7 +35,7 @@ export default function Page() {
     return (
         <>
             <Navbar />
-            <div className="flex px-4 py-6 gap-6">
+            <div className="flex px-4 py-6 gap-6 pt-14">
                 <aside
                     className="w-64 shrink-0 border-r overflow-y-auto"
                     style={{ height: "calc(100vh - 128px)" }}

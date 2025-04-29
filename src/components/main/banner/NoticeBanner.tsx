@@ -1,6 +1,6 @@
 'use client';
 
-import { Card } from '@/components/ui/card';
+import { Card, CardTitle } from '@/components/ui/card';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
@@ -8,7 +8,7 @@ export function NoticeBanner() {
   return (
     <Card className="p-4 text-sm relative">
       <div className="flex justify-between items-center font-semibold mb-2">
-        <span>공지 및 이벤트</span>
+        <CardTitle>공지 및 이벤트</CardTitle>
         <Link href="/community" className="text-gray-400 hover:text-gray-600 transition">
           <ChevronRight size={16} />
         </Link>

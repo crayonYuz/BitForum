@@ -10,7 +10,6 @@ import { CoinTableHeader } from '../coin/CoinTableHeader';
 import { Pagination } from '../coin/Pagination';
 import { CoinRow } from '../coin/CoinRow';
 
-
 export function CoinInfoList() {
   const { data, isLoading, isError } = useQuery<Coin[]>({
     queryKey: ['cryptoPrices'],
