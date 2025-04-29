@@ -50,7 +50,7 @@ export function ForumNewsCards() {
                 {articles.map((article, index) => (
                     <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
                         <div className="p-4">
-                            <Card className="w-80 h-62">
+                            <Card className="w-80 h-62 border-">
                                 <CardContent className="flex flex-col items-center justify-center p-4">
                                     <Image
                                         src={article.image}
