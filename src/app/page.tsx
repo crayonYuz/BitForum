@@ -23,7 +23,7 @@ export default function Page() {
             <CoinTickerWidget />
 
             <section>
-              <SectionTitle title="코인포럼 뉴스" subtitle="코인포럼만의 오리지널 콘텐츠" />
+              <SectionTitle title="비트포럼 뉴스" subtitle="비트포럼만의 오리지널 콘텐츠" />
               <ForumNewsCards />
             </section>
 
