@@ -13,3 +13,38 @@ export interface Coin {
   market_cap: number
   market_cap_rank: number
 }
+
+export interface CoinDetail {
+  id: string
+  symbol: string
+  name: string
+  description: {
+    ko?: string
+    en?: string
+  }
+  image: {
+    thumb: string
+    small: string
+    large: string
+  }
+  market_data: {
+    current_price: {
+      krw: number
+    }
+    market_cap: {
+      krw: number
+    }
+    price_change_percentage_24h: number
+  }
+  tickers: {
+    market: {
+      name: string
+    }
+    converted_last: {
+      krw: number
+    }
+    converted_volume: {
+      krw: number
+    }
+  }[]
+}
