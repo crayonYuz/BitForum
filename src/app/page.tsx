@@ -8,8 +8,22 @@ import { InfoCard } from '@/components/InfoCard';
 import { SectionTitle } from '@/components/news/SectionTitle';
 import { ForumNewsCards } from '@/components/main/ForumNewsCard';
 import { AffiliateProgram } from '@/components/affiliate/AffiliateProgram';
+import { ForumNewsCardsSkeleton } from '@/components/main/ForumNewsCardsSkeleton';
+import { Skeleton } from '@/components/ui/skeleton';
+import { useState, useEffect } from 'react';
+import { InfoCardSkeleton } from '@/components/main/InfoCardSkeleton';
 
 export default function Page() {
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
+  }, []);
+
   return (
     <>
       <Navbar />
@@ -18,30 +32,40 @@ export default function Page() {
           <LeftBanner />
 
           <main className="w-full max-w-5xl px-6 py-4 space-y-8">
-            <AffiliateProgram />
+            {isLoading ? <Skeleton className="h-24 w-full rounded-lg" /> : <AffiliateProgram />}
 
-            <CoinTickerWidget />
+            {isLoading ? <Skeleton className="h-16 w-full rounded-lg" /> : <CoinTickerWidget />}
 
             <section>
-              <SectionTitle title="코인포럼 뉴스" subtitle="코인포럼만의 오리지널 콘텐츠" />
-              <ForumNewsCards />
+              <SectionTitle title="비트포럼 뉴스" subtitle="비트포럼만의 오리지널 콘텐츠" />
+              {isLoading ? <ForumNewsCardsSkeleton /> : <ForumNewsCards />}
             </section>
 
             <section>
               <h2 className="text-xl font-bold mb-2">뉴스</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                <div className="col-span-1">
-                  <InfoCard title="미국증시" description="관련 뉴스가 여기에 표시됩니다." />
-                </div>
-                <div className="col-span-1">
-                  <InfoCard title="코인 뉴스" description="관련 뉴스가 여기에 표시됩니다." />
-                </div>
+                {[0, 1].map((i) => (
+                  <div className="col-span-1" key={i}>
+                    {isLoading ? (
+                      <InfoCardSkeleton />
+                    ) : (
+                      <InfoCard
+                        title={i === 0 ? '미국증시' : '코인 뉴스'}
+                        description="관련 뉴스가 여기에 표시됩니다."
+                      />
+                    )}
+                  </div>
+                ))}
                 <div className="col-span-1 md:col-span-1">
-                  <iframe
-                    src="https://kr.widgets.investing.com/live-currency-cross-rates?theme=lightTheme&hideTitle=true&roundedCorners=true&pairs=9511,158,159,650"
-                    width="100%"
-                    height="300vh"
-                  />
+                  {isLoading ? (
+                    <Skeleton className="h-[300px] w-full rounded-lg" />
+                  ) : (
+                    <iframe
+                      src="https://kr.widgets.investing.com/live-currency-cross-rates?theme=lightTheme&hideTitle=true&roundedCorners=true&pairs=9511,158,159,650"
+                      width="100%"
+                      height="300vh"
+                    />
+                  )}
                 </div>
               </div>
             </section>
@@ -49,8 +73,18 @@ export default function Page() {
             <section>
               <h2 className="text-xl font-bold mb-2">커뮤니티</h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <InfoCard title="자유 게시판" description="게시글 요약 또는 링크가 여기에 들어갑니다." />
-                <InfoCard title="초보자 가이드" description="게시글 요약 또는 링크가 여기에 들어갑니다." />
+                {[0, 1].map((i) => (
+                  <div className="col-span-1" key={i}>
+                    {isLoading ? (
+                      <InfoCardSkeleton />
+                    ) : (
+                      <InfoCard
+                        title={i === 0 ? '자유 게시판' : '초보자 가이드'}
+                        description="게시글 요약 또는 링크가 여기에 들어갑니다."
+                      />
+                    )}
+                  </div>
+                ))}
               </div>
             </section>
           </main>
@@ -60,4 +94,4 @@ export default function Page() {
       </div>
     </>
   );
-}
+} 

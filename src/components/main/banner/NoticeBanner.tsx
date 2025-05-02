@@ -16,7 +16,7 @@ export function NoticeBanner() {
       <ul className="list-disc pl-4 space-y-1">
         <li>레퍼럴 가입 시 수수료 할인!</li>
         <li>거래소 이벤트: 5월 한정 에어드랍 진행 중</li>
-        <li>코인포럼 자체 커뮤니티 이벤트 진행 예정</li>
+        <li>비트포럼 자체 커뮤니티 이벤트 진행 예정</li>
       </ul>
     </Card>
   );

@@ -9,6 +9,7 @@ import { useState } from 'react';
 import { CoinTableHeader } from '../coin/CoinTableHeader';
 import { Pagination } from '../coin/Pagination';
 import { CoinRow } from '../coin/CoinRow';
+import { Search } from 'lucide-react';
 
 export function CoinInfoList() {
   const { data, isLoading, isError } = useQuery<Coin[]>({
@@ -18,18 +19,31 @@ export function CoinInfoList() {
   });
 
   const [currentPage, setCurrentPage] = useState(1);
+  const [query, setQuery] = useState('');
   const coinsPerPage = 10;
 
+  const filteredData = data?.filter((coin) =>
+    coin.name.toLowerCase().includes(query.toLowerCase()) ||
+    coin.symbol.toLowerCase().includes(query.toLowerCase())
+  ) ?? [];
+
+  const totalPages = Math.ceil(filteredData.length / coinsPerPage);
   const startIdx = (currentPage - 1) * coinsPerPage;
   const endIdx = startIdx + coinsPerPage;
-  const currentCoins = data?.slice(startIdx, endIdx) ?? [];
-
-  const totalPages = data ? Math.ceil(data.length / coinsPerPage) : 0;
+  const currentCoins = filteredData.slice(startIdx, endIdx);
 
   return (
     <Card className="p-4 w-full">
       <h2 className="font-semibold text-base mb-4">코인 정보</h2>
-      <Input placeholder="무엇을 검색할까요?" className="mb-4" />
+      <div className="relative mb-4">
+        <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
+        <Input
+          placeholder="코인명을 검색해주세요"
+          className="pl-9"
+          value={query}
+          onChange={(e) => setQuery(e.target.value)}
+        />
+      </div>
       <CoinTableHeader />
 
       {isLoading && <div className="text-sm text-gray-500 mt-4">불러오는 중...</div>}

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { Coin } from "@/types/coin";
 import { cn } from "@/lib/utils";
 
@@ -11,8 +12,8 @@ export function CoinTableRow({ coin, index }: { coin: Coin; index: number }) {
     };
 
     return (
-        <div className="overflow-x-auto cursor-pointer">
-            <div className="grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_1fr_1fr_1fr_0.2fr] items-center py-3 px-4 border-b hover:bg-muted transition-colors">
+        <Link href={`/coin-info/${coin.id}`} className="block">
+            <div className="grid grid-cols-[1fr_1.5fr_1fr_1fr_1fr_1fr_1fr_1fr_0.2fr] items-center py-3 px-4 border-b hover:bg-muted transition-colors cursor-pointer">
                 <div className="text-sm text-center text-muted-foreground">{index + 1}</div>
 
                 <div className="flex items-center gap-2">
@@ -41,6 +42,6 @@ export function CoinTableRow({ coin, index }: { coin: Coin; index: number }) {
 
                 <div className="text-right text-sm">{coin.market_cap_rank}위</div>
             </div>
-        </div>
+        </Link>
     );
 }

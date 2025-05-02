@@ -17,7 +17,7 @@ export function CoinRow({
 }: CoinRowProps) {
     return (
         <li>
-            <Link href={`/coins/${id}`}>
+            <Link href={`/coin-info/${id}`}>
                 <div className="grid grid-cols-3 items-center py-2 text-sm hover:bg-gray-100 transition rounded cursor-pointer">
                     <div className="flex items-center space-x-2">
                         <img src={image} alt={name} className="w-5 h-5" />

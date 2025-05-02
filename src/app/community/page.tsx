@@ -10,10 +10,12 @@ import { AffiliateBanner } from "@/components/affiliate/AffiliateBanner";
 import { CommunityTabs } from "@/components/community/CommunityTabs";
 import { CommunityData } from "@/lib/commnuityData";
 import { CommunityItem } from "@/components/community/CommuityItem";
+import { useSession } from "next-auth/react";
 
 export default function Page() {
     const [selectedTab, setSelectedTab] = useState("전체");
     const tabs = ["전체", "자유게시판", "초보자 가이드", "공지및이벤트"];
+    const { data: session } = useSession();
 
     const router = useRouter();
 
@@ -56,12 +58,14 @@ export default function Page() {
                     <SidePanel />
                 </aside>
 
-                <Button
-                    onClick={handleWriteClick}
-                    className="fixed bottom-10 right-10 p-4 bg-blue-600 text-white rounded-full shadow-lg"
-                >
-                    <Edit size={24} />
-                </Button>
+                {session && (
+                    <Button
+                        onClick={handleWriteClick}
+                        className="fixed bottom-10 right-10 p-4 bg-blue-600 text-white rounded-full shadow-lg"
+                    >
+                        <Edit size={24} />
+                    </Button>
+                )}
             </div>
         </div>
     );
