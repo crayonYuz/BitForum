@@ -1,31 +1,36 @@
-'use client'
+'use client';
 
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
-
-const ReactMarkdownEditor = dynamic(() => import('react-markdown-editor-lite'), { ssr: false });
-import 'react-markdown-editor-lite/lib/index.css';
 import { Navbar } from '@/components/main/Navbar';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import '@toast-ui/editor/dist/toastui-editor.css';
 
-export default function WritePage() {
-    const [title, setTitle] = useState<string>('');
-    const [content, setContent] = useState<string>('');
-    const [category, setCategory] = useState<string>('free');
+const ToastEditor = dynamic(() => import('@toast-ui/react-editor').then(mod => mod.Editor), {
+    ssr: false,
+});
+
+export default function Page() {
     const router = useRouter();
+    const editorRef = useRef<any>(null);
+    const [title, setTitle] = useState('');
+    const [category, setCategory] = useState('free');
 
-    const handleCategoryChange = (value: string) => {
-        setCategory(value);
-    };
+    const handleCategoryChange = (value: string) => setCategory(value);
+
+    const getEditorContent = () => editorRef.current?.getInstance()?.getMarkdown() || '';
 
     const handleSaveDraft = () => {
+        const content = getEditorContent();
         localStorage.setItem('draft', JSON.stringify({ title, content, category }));
         alert('임시 저장되었습니다.');
     };
 
     const handleSubmit = () => {
+        const content = getEditorContent();
+        console.log({ title, category, content });
         alert('글이 등록되었습니다.');
         router.push('/community');
     };
@@ -33,10 +38,10 @@ export default function WritePage() {
     return (
         <>
             <Navbar />
-            <div className="max-w-4xl mx-auto p-6 space-y-6 pt-14">
-                <h1 className="text-2xl font-bold mb-4">글 작성하기</h1>
+            <div className="max-w-4xl mx-auto p-6 space-y-6 mt-14">
+                <h1 className="text-2xl font-bold">글 작성하기</h1>
 
-                <div className="mb-4">
+                <div>
                     <Select value={category} onValueChange={handleCategoryChange}>
                         <SelectTrigger className="w-full p-2 border rounded">
                             <SelectValue placeholder="카테고리 선택" />
@@ -49,7 +54,7 @@ export default function WritePage() {
                     </Select>
                 </div>
 
-                <div className="mb-4">
+                <div>
                     <input
                         type="text"
                         value={title}
@@ -59,11 +64,14 @@ export default function WritePage() {
                     />
                 </div>
 
-                <div className="mb-4">
-                    <ReactMarkdownEditor
-                        value={content}
-                        onChange={({ text }: { text: string }) => setContent(text)}
-                        renderHTML={(text) => text}
+                <div>
+                    <ToastEditor
+                        ref={editorRef}
+                        initialValue=" "
+                        previewStyle="tab"
+                        height="550px"
+                        initialEditType="markdown"
+                        useCommandShortcut={true}
                     />
                 </div>
 
