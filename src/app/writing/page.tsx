@@ -1,43 +1,75 @@
-'use client'
+'use client';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
-
-const ReactMarkdownEditor = dynamic(() => import('react-markdown-editor-lite'), { ssr: false });
-import 'react-markdown-editor-lite/lib/index.css';
 import { Navbar } from '@/components/main/Navbar';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
+import '@toast-ui/editor/dist/toastui-editor.css';
+import { useMutation } from '@tanstack/react-query';
+import { createPost } from '@/lib/api/post/posts';
+import { useSession } from 'next-auth/react';
+import { toast } from "sonner"
 
-export default function WritePage() {
-    const [title, setTitle] = useState<string>('');
-    const [content, setContent] = useState<string>('');
-    const [category, setCategory] = useState<string>('free');
+const ToastEditor = dynamic(() => import('@toast-ui/react-editor').then(mod => mod.Editor), {
+    ssr: false,
+});
+
+export default function Page() {
     const router = useRouter();
+    const editorRef = useRef<any>(null);
+    const [title, setTitle] = useState('');
+    const [category, setCategory] = useState<'free' | 'coin-info' | 'beginner-guide'>('free');
 
-    const handleCategoryChange = (value: string) => {
-        setCategory(value);
+    const { data: session } = useSession();
+
+    const mutation = useMutation({
+        mutationFn: createPost,
+        onSuccess: () => {
+            toast.success('글이 등록되었습니다.');
+            router.push('/community');
+        },
+        onError: () => {
+            toast.error('등록에 실패했습니다. 다시 시도해 주세요.');
+        },
+    });
+
+    const getEditorContent = () => editorRef.current?.getInstance()?.getMarkdown() || '';
+
+    const handleSubmit = () => {
+        const content = getEditorContent();
+        if (!title || !content) {
+            toast.info('제목과 내용을 모두 입력해 주세요.');
+            return;
+        }
+
+        mutation.mutate({
+            title,
+            category,
+            content,
+            author: session?.user?.name ?? '익명',
+        });
     };
 
     const handleSaveDraft = () => {
-        localStorage.setItem('draft', JSON.stringify({ title, content, category }));
-        alert('임시 저장되었습니다.');
+        const content = getEditorContent();
+        localStorage.setItem(
+            'draft',
+            JSON.stringify({ title, content, category })
+        );
+        toast.info('임시 저장되었습니다.');
     };
 
-    const handleSubmit = () => {
-        alert('글이 등록되었습니다.');
-        router.push('/community');
-    };
 
     return (
         <>
             <Navbar />
-            <div className="max-w-4xl mx-auto p-6 space-y-6 pt-14">
-                <h1 className="text-2xl font-bold mb-4">글 작성하기</h1>
+            <div className="max-w-4xl mx-auto p-6 space-y-6 mt-14">
+                <h1 className="text-2xl font-bold">글 작성하기</h1>
 
-                <div className="mb-4">
-                    <Select value={category} onValueChange={handleCategoryChange}>
+                <div>
+                    <Select value={category} onValueChange={(val) => setCategory(val as any)}>
                         <SelectTrigger className="w-full p-2 border rounded">
                             <SelectValue placeholder="카테고리 선택" />
                         </SelectTrigger>
@@ -49,7 +81,7 @@ export default function WritePage() {
                     </Select>
                 </div>
 
-                <div className="mb-4">
+                <div>
                     <input
                         type="text"
                         value={title}
@@ -59,17 +91,24 @@ export default function WritePage() {
                     />
                 </div>
 
-                <div className="mb-4">
-                    <ReactMarkdownEditor
-                        value={content}
-                        onChange={({ text }: { text: string }) => setContent(text)}
-                        renderHTML={(text) => text}
+                <div>
+                    <ToastEditor
+                        ref={editorRef}
+                        initialValue=" "
+                        previewStyle="tab"
+                        height="550px"
+                        initialEditType="markdown"
+                        useCommandShortcut={true}
                     />
                 </div>
 
                 <div className="flex gap-4">
-                    <Button variant="ghost" onClick={handleSaveDraft}>임시 저장</Button>
-                    <Button onClick={handleSubmit}>완료</Button>
+                    <Button variant="ghost" onClick={handleSaveDraft}>
+                        임시 저장
+                    </Button>
+                    <Button onClick={handleSubmit} disabled={mutation.isPending}>
+                        {mutation.isPending ? '등록 중...' : '완료'}
+                    </Button>
                 </div>
             </div>
         </>

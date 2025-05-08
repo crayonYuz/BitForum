@@ -8,7 +8,7 @@ interface Props {
 
 export function CommunityTabs({ tabs, selectedTab, onTabChange }: Props) {
     return (
-        <div className="flex gap-4 pb-4">
+        <div className="flex gap-4">
             {tabs.map((tab) => (
                 <button
                     key={tab}

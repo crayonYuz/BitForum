@@ -3,7 +3,7 @@ const concern = ["미중관세안? 쌍방은 아님", "단기 반등하고 또 �
 
 export const SidePanel = () => {
     return (
-        <div className="w-full lg:w-64 flex flex-col gap-6">
+        <div className="w-full lg:w-64 lg:sticky lg:top-20 flex flex-col gap-6 h-fit">
             <PanelList title="🔥 중요해요" items={important} />
             <PanelList title="😟 걱정돼요" items={concern} />
         </div>

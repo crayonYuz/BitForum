@@ -12,9 +12,19 @@ import { ForumNewsCardsSkeleton } from '@/components/main/ForumNewsCardsSkeleton
 import { Skeleton } from '@/components/ui/skeleton';
 import { useState, useEffect } from 'react';
 import { InfoCardSkeleton } from '@/components/main/InfoCardSkeleton';
+import { useQuery } from '@tanstack/react-query';
+import { getPosts, Post } from '@/lib/api/post/getPosts';
+import { useRouter } from 'next/navigation';
+import { CommunityHighlightSection } from '@/components/main/CommunityHighlightSection';
 
 export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
+  const router = useRouter();
+
+  const { data: posts } = useQuery<Post[]>({
+    queryKey: ['posts'],
+    queryFn: getPosts,
+  });
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -23,6 +33,13 @@ export default function Page() {
 
     return () => clearTimeout(timer);
   }, []);
+
+  const freeBoardPosts = posts?.filter(post => post.category === 'free') || [];
+  const beginnerGuidePosts = posts?.filter(post => post.category === 'beginner-guide') || [];
+
+  const handlePostClick = (postId: number) => {
+    router.push(`/community/${postId}`);
+  };
 
   return (
     <>
@@ -70,28 +87,20 @@ export default function Page() {
               </div>
             </section>
 
-            <section>
-              <h2 className="text-xl font-bold mb-2">커뮤니티</h2>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {[0, 1].map((i) => (
-                  <div className="col-span-1" key={i}>
-                    {isLoading ? (
-                      <InfoCardSkeleton />
-                    ) : (
-                      <InfoCard
-                        title={i === 0 ? '자유 게시판' : '초보자 가이드'}
-                        description="게시글 요약 또는 링크가 여기에 들어갑니다."
-                      />
-                    )}
-                  </div>
-                ))}
-              </div>
-            </section>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <CommunityHighlightSection
+                title="자유 게시판"
+                posts={freeBoardPosts}
+              />
+              <CommunityHighlightSection
+                title="초보자 가이드"
+                posts={beginnerGuidePosts}
+              />
+            </div>
           </main>
-
           <RightPanel />
         </div>
       </div>
     </>
   );
-} 
+}
