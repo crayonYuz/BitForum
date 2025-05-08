@@ -15,7 +15,7 @@ import { getPosts, Post } from "@/lib/api/post/getPosts";
 
 export default function Page() {
     const [selectedTab, setSelectedTab] = useState("전체");
-    const tabs = ["전체", "자유게시판", "코인 정보", "초보자 가이드"];
+    const tabs = ["전체", "자유게시판", "코인 정보", "초보자 가이드", "공지 및 이벤트"];
     const { data: session } = useSession();
     const router = useRouter();
 

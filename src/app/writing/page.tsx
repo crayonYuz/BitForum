@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
@@ -9,6 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { useMutation } from '@tanstack/react-query';
 import { createPost } from '@/lib/api/post/posts';
+import { useSession } from 'next-auth/react';
+import { toast } from "sonner"
 
 const ToastEditor = dynamic(() => import('@toast-ui/react-editor').then(mod => mod.Editor), {
     ssr: false,
@@ -20,14 +22,16 @@ export default function Page() {
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState<'free' | 'coin-info' | 'beginner-guide'>('free');
 
+    const { data: session } = useSession();
+
     const mutation = useMutation({
         mutationFn: createPost,
         onSuccess: () => {
-            alert('글이 등록되었습니다.');
+            toast.success('글이 등록되었습니다.');
             router.push('/community');
         },
         onError: () => {
-            alert('등록에 실패했습니다. 다시 시도해 주세요.');
+            toast.error('등록에 실패했습니다. 다시 시도해 주세요.');
         },
     });
 
@@ -36,7 +40,7 @@ export default function Page() {
     const handleSubmit = () => {
         const content = getEditorContent();
         if (!title || !content) {
-            alert('제목과 내용을 모두 입력해 주세요.');
+            toast.info('제목과 내용을 모두 입력해 주세요.');
             return;
         }
 
@@ -44,6 +48,7 @@ export default function Page() {
             title,
             category,
             content,
+            author: session?.user?.name ?? '익명',
         });
     };
 
@@ -53,7 +58,7 @@ export default function Page() {
             'draft',
             JSON.stringify({ title, content, category })
         );
-        alert('임시 저장되었습니다.');
+        toast.info('임시 저장되었습니다.');
     };
 
 

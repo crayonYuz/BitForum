@@ -4,6 +4,7 @@ export interface CreatePostPayload {
   title: string
   category: 'free' | 'coin-info' | 'beginner-guide'
   content: string
+  author: string
 }
 
 export const createPost = async (data: CreatePostPayload) => {
