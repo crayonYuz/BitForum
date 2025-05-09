@@ -6,8 +6,6 @@ import { Navbar } from '@/components/main/Navbar';
 import { notFound } from 'next/navigation';
 import { Card, CardContent } from '@/components/ui/card';
 import { SidePanel } from '@/components/community/SidePanel';
-import { Button } from '@/components/ui/button';
-import { Textarea } from '@/components/ui/textarea';
 import { AffiliateBanner } from '@/components/affiliate/AffiliateBanner';
 import { categoryMap, getTimeAgo } from '@/utils/dataUtils';
 import { getPost } from '@/lib/api/post/getPost';
@@ -16,6 +14,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { MoreHorizontal } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { toast } from "sonner"
+import { CommentSection } from '@/components/community/CommentSection';
 
 export default function Page() {
     const params = useParams();
@@ -93,13 +92,7 @@ export default function Page() {
                         </CardContent>
 
                         <CardContent className="space-y-3">
-                            <h2 className="font-semibold text-lg">댓글 0개</h2>
-                            <div className="space-y-2">
-                                <Textarea className="resize-none h-24" placeholder="댓글을 입력해 주세요" />
-                                <div className="flex justify-end">
-                                    <Button>남기기</Button>
-                                </div>
-                            </div>
+                            <CommentSection postId={id} />
                         </CardContent>
                     </Card>
                 </main>

@@ -37,10 +37,6 @@ export default function Page() {
   const freeBoardPosts = posts?.filter(post => post.category === 'free') || [];
   const beginnerGuidePosts = posts?.filter(post => post.category === 'beginner-guide') || [];
 
-  const handlePostClick = (postId: number) => {
-    router.push(`/community/${postId}`);
-  };
-
   return (
     <>
       <Navbar />
