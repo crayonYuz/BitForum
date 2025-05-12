@@ -15,6 +15,7 @@ import { MoreHorizontal } from 'lucide-react';
 import { useSession } from 'next-auth/react';
 import { toast } from "sonner"
 import { CommentSection } from '@/components/community/CommentSection';
+import { marked } from 'marked';
 
 export default function Page() {
     const params = useParams();
@@ -87,7 +88,7 @@ export default function Page() {
 
                             <div
                                 className="prose prose-sm max-w-none text-gray-900 min-h-[200px]"
-                                dangerouslySetInnerHTML={{ __html: post.content }}
+                                dangerouslySetInnerHTML={{ __html: marked.parse(post.content) }}
                             />
                         </CardContent>
 
