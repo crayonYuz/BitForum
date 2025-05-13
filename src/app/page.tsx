@@ -40,13 +40,14 @@ export default function Page() {
   return (
     <>
       <Navbar />
-      <div className="flex justify-center pt-14">
-        <div className="flex min-h-screen gap-6 px-4">
-          <LeftBanner />
+      <div className="pt-8 px-4 flex justify-center">
+        <div className="w-full max-w-screen-3xl flex flex-col items-center lg:flex-row lg:items-start gap-8">
+          <aside className="hidden lg:flex lg:w-1/4 justify-end">
+            <LeftBanner />
+          </aside>
 
-          <main className="w-full max-w-5xl px-6 py-4 space-y-8">
+          <main className="w-full lg:w-2/4 space-y-8 pt-12">
             {isLoading ? <Skeleton className="h-24 w-full rounded-lg" /> : <AffiliateProgram />}
-
             {isLoading ? <Skeleton className="h-16 w-full rounded-lg" /> : <CoinTickerWidget />}
 
             <section>
@@ -76,25 +77,22 @@ export default function Page() {
                     <iframe
                       src="https://kr.widgets.investing.com/live-currency-cross-rates?theme=lightTheme&hideTitle=true&roundedCorners=true&pairs=9511,158,159,650"
                       width="100%"
-                      height="300vh"
+                      height="300"
                     />
                   )}
                 </div>
               </div>
             </section>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <CommunityHighlightSection
-                title="자유 게시판"
-                posts={freeBoardPosts}
-              />
-              <CommunityHighlightSection
-                title="초보자 가이드"
-                posts={beginnerGuidePosts}
-              />
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-14">
+              <CommunityHighlightSection title="자유 게시판" posts={freeBoardPosts} />
+              <CommunityHighlightSection title="초보자 가이드" posts={beginnerGuidePosts} />
             </div>
           </main>
-          <RightPanel />
+
+          <aside className="hidden lg:flex lg:w-1/4 justify-start">
+            <RightPanel />
+          </aside>
         </div>
       </div>
     </>
