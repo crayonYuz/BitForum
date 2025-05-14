@@ -1,18 +1,44 @@
-'use client';
+'use client'
 
-import { dummyCoinNews } from '@/lib/dummyData';
+import { CoinNews } from '@/lib/api/news/getCoinNews'
+import Link from 'next/link'
+import { extractFirstImageUrl, stripHtmlTags, decodeHtmlEntities } from '@/utils/markdown'
+import Image from 'next/image'
 
-export function CoinNewsList() {
+export const CoinNewsList = ({ news }: { news: CoinNews[] }) => {
     return (
-        <div>
-            <h2 className="text-xl font-bold mb-2">인기 코인 뉴스</h2>
-            <ul className="space-y-2 text-sm">
-                {dummyCoinNews.map((item, index) => (
-                    <li key={index} className="border-b py-2">
-                        {item.title}
-                    </li>
-                ))}
-            </ul>
+        <div className="flex flex-col space-y-4">
+            {news.map((news) => {
+                const imageUrl = extractFirstImageUrl(news.content.rendered)
+                const plainContent = stripHtmlTags(decodeHtmlEntities(news.content.rendered));
+                const decodedTitle = decodeHtmlEntities(news.title.rendered);
+
+                return (
+                    <Link key={news.id} href={`/news/${news.id}`}>
+                        <div className="flex border-b pb-4 cursor-pointer hover:bg-gray-50 transition-all p-2 rounded gap-4">
+                            <div className="flex-1">
+                                <div className="text-xs text-muted-foreground">
+                                    {new Date(news.date).toLocaleDateString()}
+                                </div>
+                                <div className="font-semibold">{decodedTitle}</div>
+                                <div className="text-sm text-gray-700 mt-2 line-clamp-2">
+                                    {plainContent}
+                                </div>
+                            </div>
+                            {imageUrl && (
+                                <div className="w-24 h-24 relative shrink-0">
+                                    <Image
+                                        src={imageUrl}
+                                        alt="썸네일"
+                                        fill
+                                        className="object-cover rounded"
+                                    />
+                                </div>
+                            )}
+                        </div>
+                    </Link>
+                )
+            })}
         </div>
-    );
+    )
 }

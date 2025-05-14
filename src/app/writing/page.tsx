@@ -6,11 +6,11 @@ import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
 import { Navbar } from '@/components/main/Navbar';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
-import '@toast-ui/editor/dist/toastui-editor.css';
 import { useMutation } from '@tanstack/react-query';
 import { createPost } from '@/lib/api/post/posts';
 import { useSession } from 'next-auth/react';
 import { toast } from "sonner"
+import '@toast-ui/editor/dist/toastui-editor.css';
 
 const ToastEditor = dynamic(() => import('@toast-ui/react-editor').then(mod => mod.Editor), {
     ssr: false,
