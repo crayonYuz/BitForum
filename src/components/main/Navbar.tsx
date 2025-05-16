@@ -1,15 +1,12 @@
 'use client';
 
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useSession, signOut } from "next-auth/react";
+import { Button } from "@/components/ui/button";
 import {
-    HomeIcon,
-    NewspaperIcon,
-    UsersIcon,
-    CircleDollarSignIcon,
-    CalendarIcon,
+    HomeIcon, NewspaperIcon, UsersIcon,
+    CircleDollarSignIcon, CalendarIcon,
 } from "lucide-react";
 
 const navItems = [
@@ -24,6 +21,9 @@ export function Navbar() {
     const pathname = usePathname();
     const { data: session } = useSession();
 
+    const isActive = (href: string) =>
+        href === "/" ? pathname === href : pathname.startsWith(href);
+
     return (
         <>
             <header className="flex w-full h-14 border-b bg-white text-black px-4 py-2 items-center justify-between fixed top-0 left-0 right-0 z-50">
@@ -36,7 +36,8 @@ export function Navbar() {
                             <Link key={href} href={href}>
                                 <Button
                                     variant="ghost"
-                                    className={`text-base cursor-pointer ${pathname === href ? "text-blue-600" : "text-gray-500"} hover:bg-transparent hover:text-blue-600`}
+                                    className={`text-base font-semibold ${isActive(href) ? "text-blue-600" : "text-gray-500"
+                                        } hover:bg-transparent hover:text-blue-600`}
                                 >
                                     {label}
                                 </Button>
@@ -63,11 +64,17 @@ export function Navbar() {
                 </div>
             </header>
 
+            {/* Bottom Mobile Nav */}
             <nav className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-md flex justify-around items-center h-14 md:hidden z-50">
                 {navItems.map(({ href, label, icon }) => (
-                    <Link key={href} href={href} className="flex flex-col items-center text-xs text-gray-600 hover:text-blue-600">
+                    <Link
+                        key={href}
+                        href={href}
+                        className={`flex flex-col items-center text-xs ${isActive(href) ? "text-blue-600 font-semibold" : "text-gray-600"
+                            } hover:text-blue-600`}
+                    >
                         {icon}
-                        <span className={`text-[11px] ${pathname === href ? 'text-blue-600 font-semibold' : ''}`}>{label}</span>
+                        <span className="text-[11px]">{label}</span>
                     </Link>
                 ))}
             </nav>

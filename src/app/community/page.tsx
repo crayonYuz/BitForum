@@ -1,8 +1,8 @@
 'use client';
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { Navbar } from "@/components/main/Navbar";
 import { SidePanel } from "@/components/community/SidePanel";
@@ -14,10 +14,16 @@ import { CommunityItem } from "@/components/community/CommuityItem";
 import { getPosts, Post } from "@/lib/api/post/getPosts";
 
 export default function Page() {
+    const searchParams = useSearchParams();
+    const router = useRouter();
     const [selectedTab, setSelectedTab] = useState("전체");
     const tabs = ["전체", "자유게시판", "코인 정보", "초보자 가이드", "공지 및 이벤트"];
     const { data: session } = useSession();
-    const router = useRouter();
+
+    useEffect(() => {
+        const initialTab = searchParams.get("tab");
+        if (initialTab) setSelectedTab(initialTab);
+    }, [searchParams]);
 
     const { data: posts = [], isLoading, isError } = useQuery<Post[]>({
         queryKey: ['posts'],
@@ -28,13 +34,16 @@ export default function Page() {
         router.push("/writing");
     };
 
-    const sortedPosts = posts.sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime());
+    const sortedPosts = posts.sort((a, b) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
 
     const filteredCommunity = sortedPosts.filter((item) => {
         if (selectedTab === "전체") return true;
         if (selectedTab === "자유게시판") return item.category === "free";
         if (selectedTab === "코인 정보") return item.category === "coin-info";
         if (selectedTab === "초보자 가이드") return item.category === "beginner-guide";
+        if (selectedTab === "공지 및 이벤트") return item.category === "notice";
         return false;
     });
 
@@ -42,7 +51,7 @@ export default function Page() {
         <div className="bg-white min-h-screen text-gray-900 pt-6">
             <Navbar />
 
-            <div className="max-w-7xl mx-auto px-4 pt-14 lg:flex lg:gap-6">
+            <div className="max-w-7xl mx-auto px-4 pt-14 lg:flex lg:gap-6 justify-center">
                 <div className="lg:w-2/3 space-y-6">
                     <AffiliateBanner />
                     <h2 className="text-2xl font-semibold text-gray-800">커뮤니티</h2>
@@ -50,7 +59,10 @@ export default function Page() {
                     <CommunityTabs
                         tabs={tabs}
                         selectedTab={selectedTab}
-                        onTabChange={setSelectedTab}
+                        onTabChange={(tab) => {
+                            setSelectedTab(tab);
+                            router.replace(`/community?tab=${encodeURIComponent(tab)}`);
+                        }}
                     />
 
                     {isLoading ? (

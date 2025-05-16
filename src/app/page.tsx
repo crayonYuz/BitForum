@@ -42,11 +42,10 @@ export default function Page() {
       <Navbar />
       <div className="pt-8 px-4 flex justify-center">
         <div className="w-full max-w-screen-3xl flex flex-col items-center lg:flex-row lg:items-start gap-8">
-          <aside className="hidden lg:flex lg:w-1/4 justify-end">
-            <LeftBanner />
-          </aside>
 
-          <main className="w-full lg:w-2/4 space-y-8 pt-12">
+          <LeftBanner />
+
+          <main className="w-full lg:w-2/4 space-y-8 pt-12 mx-auto">
             {isLoading ? <Skeleton className="h-24 w-full rounded-lg" /> : <AffiliateProgram />}
             {isLoading ? <Skeleton className="h-16 w-full rounded-lg" /> : <CoinTickerWidget />}
 
@@ -90,9 +89,8 @@ export default function Page() {
             </div>
           </main>
 
-          <aside className="hidden lg:flex lg:w-1/4 justify-start">
-            <RightPanel />
-          </aside>
+          <RightPanel />
+
         </div>
       </div>
     </>

@@ -2,57 +2,51 @@
 
 import useSWR from "swr"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { cn } from "@/lib/utils"
 
 const fetcher = (url: string) => fetch(url).then(res => res.json())
-
-type Classification = "Extreme Fear" | "Fear" | "Neutral" | "Greed" | "Extreme Greed";
-
-const getClassificationStyles = (classification: Classification) => {
-    const styles: Record<Classification, { text: string; bg: string }> = {
-        "Extreme Fear": { text: "text-red-500", bg: "bg-red-500" },
-        "Fear": { text: "text-orange-500", bg: "bg-orange-500" },
-        "Neutral": { text: "text-yellow-500", bg: "bg-yellow-500" },
-        "Greed": { text: "text-green-500", bg: "bg-green-500" },
-        "Extreme Greed": { text: "text-emerald-600", bg: "bg-emerald-600" },
-    };
-
-    return styles[classification] || { text: "text-gray-400", bg: "bg-gray-400" };
-}
-
-const LoadingErrorState = ({ isLoading, isError }: { isLoading: boolean, isError: boolean }) => {
-    if (isError) return <div>공포탐욕지수 로드 실패</div>;
-    if (isLoading) return <div>로딩 중...</div>;
-    return null;
-}
+const getColor = (v: number) => v <= 40 ? '#ef4444' : v <= 60 ? '#facc15' : '#22c55e'
 
 export function FearGreedGauge() {
     const { data, error } = useSWR('https://api.alternative.me/fng/', fetcher)
-
-    const { text: textColor, bg: bgColor } = getClassificationStyles(data?.data?.[0]?.value_classification || "");
+    const info = data?.data?.[0]
+    const gauge = parseInt(info?.value || '0', 10)
+    const color = getColor(gauge)
+    const angle = (gauge / 100) * 180 - 90
+    const x = 100 + 70 * Math.cos((angle * Math.PI) / 180)
+    const y = 100 + 70 * Math.sin((angle * Math.PI) / 180)
 
     return (
-        <Card className="relative">
-            <CardHeader className="pb-0">
-                <CardTitle>공포탐욕지수</CardTitle>
-                <div className={cn("absolute top-4 right-4 text-sm font-medium", textColor)}>
-                    현재 상태: {data?.data?.[0]?.value_classification}
-                </div>
+        <Card>
+            <CardHeader className="flex items-center justify-between pb-0">
+                <CardTitle className="text-base">공포탐욕지수</CardTitle>
+                <span className="text-sm font-medium" style={{ color }}>
+                    Last week : {info?.value_classification || ''}
+                </span>
             </CardHeader>
-            <CardContent className="flex flex-col items-center justify-center py-6">
-                <LoadingErrorState isLoading={!data} isError={!!error} />
-                {data && (
-                    <>
-                        <div className="text-3xl font-bold mb-2">{parseInt(data.data[0].value, 10)}</div>
-                        <div className="w-full max-w-[160px]">
-                            <div className="w-full h-3 bg-gray-200 rounded-full overflow-hidden">
-                                <div
-                                    className={cn("h-full rounded-full transition-all duration-500", bgColor)}
-                                    style={{ width: `${parseInt(data.data[0].value, 10)}%` }}
-                                />
-                            </div>
-                        </div>
-                    </>
+
+            <CardContent className="flex flex-col items-center justify-center pt-4 pb-6">
+                {error ? (
+                    <div>공포탐욕지수 로드 실패</div>
+                ) : !data ? (
+                    <div>로딩 중...</div>
+                ) : (
+                    <div className="relative w-48 h-24">
+                        <svg width="100%" height="100%" viewBox="0 0 200 100">
+                            <defs>
+                                <linearGradient id="gaugeGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                                    <stop offset="0%" stopColor="#ef4444" />
+                                    <stop offset="50%" stopColor="#facc15" />
+                                    <stop offset="100%" stopColor="#22c55e" />
+                                </linearGradient>
+                            </defs>
+                            <path d="M10,100 A90,90 0 0,1 190,100" fill="none" stroke="url(#gaugeGradient)" strokeWidth="20" />
+                            <circle cx={x} cy={y} r="4" fill="#374151" />
+                            <text x="100" y="80" textAnchor="middle" fill={color} className="font-bold text-2xl">{gauge}</text>
+                            <text x="100" y="96" textAnchor="middle" fill={color} className="font-medium text-sm">
+                                {info?.value_classification}
+                            </text>
+                        </svg>
+                    </div>
                 )}
             </CardContent>
         </Card>

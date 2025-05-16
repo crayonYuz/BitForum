@@ -2,7 +2,7 @@ import { Card } from "antd";
 
 export function LeftBanner() {
   return (
-    <div className="w-[240px] space-y-4 pt-12">
+    <div className="w-[240px] ml-10 space-y-4 pt-12 hidden lg:block">
       <Card className="p-4 text-sm">
         <div className="font-semibold mb-2">프로모션</div>
         <ul className="list-disc pl-4 space-y-1">

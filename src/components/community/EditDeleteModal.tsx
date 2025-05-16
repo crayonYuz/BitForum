@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Textarea } from '@/components/ui/textarea';
 
-interface EditDeleteModalProps {
+interface Props {
     isOpen: boolean;
     onClose: () => void;
     onConfirmDelete: () => void;
@@ -18,7 +18,7 @@ export const EditDeleteModal = ({
     postTitle,
     postContent,
     onUpdatePost,
-}: EditDeleteModalProps) => {
+}: Props) => {
     const [isEditing, setIsEditing] = useState(false);
     const [newTitle, setNewTitle] = useState(postTitle);
     const [newContent, setNewContent] = useState(postContent);

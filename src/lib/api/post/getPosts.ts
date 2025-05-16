@@ -4,7 +4,7 @@ export interface Post {
   id: number
   title: string
   content: string
-  category: 'free' | 'coin-info' | 'beginner-guide'
+  category: 'free' | 'coin-info' | 'beginner-guide' | 'notice'
   author?: string
   createdAt: string
 }

@@ -12,34 +12,40 @@ import { BitforumNewsList } from "@/components/news/BitforumNewsList";
 import { RisingTopicsSection } from "@/components/news/RisingTopicsSection";
 import { FallingTopicsSection } from "@/components/news/FallingTopicsSection";
 import { AffiliateBanner } from "@/components/affiliate/AffiliateBanner";
+import { useState } from 'react';
+import { NewsSkeleton } from '@/components/news/NewsSkeleton';
 
 export default function Page() {
+    const tabs = ['홈', '비트포럼 뉴스', '미국 증시', '코인 뉴스'];
+    const [selectedTab, setSelectedTab] = useState('비트포럼 뉴스');
     const { data: news = [], isLoading, isError } = useQuery<CoinNews[]>({
         queryKey: ['coinNews'],
         queryFn: getCoinNews,
     });
 
     return (
-        <>
+        <div className="bg-white min-h-screen text-gray-900 pt-6">
             <Navbar />
-            <main className="max-w-7xl mx-auto px-4 py-6 lg:flex lg:gap-6 pt-20">
+
+            <div className="max-w-7xl mx-auto px-4 pt-14 lg:flex lg:gap-6 justify-center">
                 <div className="lg:w-2/3 space-y-6">
-                    <section className="space-y-4">
-                        <AffiliateBanner />
+                    <AffiliateBanner />
+
+                    <div className="space-y-4">
                         <SectionTitle title="비트포럼 뉴스" />
                         <BitforumNewsList />
-                    </section>
+                    </div>
 
-                    <section className="space-y-4">
+                    <div className="space-y-4">
                         <SectionTitle title="실시간 코인 뉴스" />
                         {isLoading ? (
-                            <p className="text-gray-400">뉴스를 불러오는 중...</p>
+                            <NewsSkeleton />
                         ) : isError ? (
                             <p className="text-red-500">뉴스를 불러오지 못했습니다.</p>
                         ) : (
                             <CoinNewsList news={news} />
                         )}
-                    </section>
+                    </div>
                 </div>
 
                 <aside className="lg:w-1/4 space-y-6">
@@ -48,7 +54,7 @@ export default function Page() {
                     <FallingTopicsSection title="하락 관점" />
                     <NewsSourceList title="뉴스출처 바로가기" />
                 </aside>
-            </main>
-        </>
+            </div>
+        </div>
     );
 }
