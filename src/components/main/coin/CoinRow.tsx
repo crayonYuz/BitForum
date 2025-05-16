@@ -1,6 +1,6 @@
 import Link from 'next/link';
 
-interface CoinRowProps {
+interface Props {
     id: string;
     name: string;
     image: string;
@@ -14,7 +14,7 @@ export function CoinRow({
     image,
     current_price,
     price_change_percentage_24h,
-}: CoinRowProps) {
+}: Props) {
     return (
         <li>
             <Link href={`/coin-info/${id}`}>

@@ -74,9 +74,8 @@ export default function Page() {
                             <SelectValue placeholder="카테고리 선택" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="free">자유</SelectItem>
+                            <SelectItem value="free">자유게시판</SelectItem>
                             <SelectItem value="coin-info">코인정보</SelectItem>
-                            <SelectItem value="beginner-guide">초보자가이드</SelectItem>
                         </SelectContent>
                     </Select>
                 </div>

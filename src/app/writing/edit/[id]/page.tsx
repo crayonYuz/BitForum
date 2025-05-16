@@ -15,7 +15,7 @@ import { toast } from "sonner"
 
 const ToastEditor = dynamic(() => import('@toast-ui/react-editor').then(mod => mod.Editor), { ssr: false });
 
-export default function EditPage() {
+export default function Page() {
     const router = useRouter();
     const { id } = useParams();
     const { data: session } = useSession();

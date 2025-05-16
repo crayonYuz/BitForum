@@ -1,4 +1,4 @@
-interface PaginationProps {
+interface Props {
     currentPage: number;
     totalPages: number;
     onPrev: () => void;
@@ -10,7 +10,7 @@ export function Pagination({
     totalPages,
     onPrev,
     onNext,
-}: PaginationProps) {
+}: Props) {
     return (
         <div className="flex justify-center mt-4 space-x-2">
             <button

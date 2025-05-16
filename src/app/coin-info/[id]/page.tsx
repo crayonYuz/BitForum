@@ -8,7 +8,7 @@ import { getCoinDetail } from '@/lib/coinChart';
 import { CoinDetailHeader } from '@/components/coin/CoinDetailHeader';
 import { ExchangeTable } from '@/components/coin/ExchangeTable';
 
-export default function CoinDetailPage() {
+export default function Page() {
     const { id } = useParams();
 
     const { data: coin, isLoading, isError } = useQuery({

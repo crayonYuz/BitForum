@@ -9,7 +9,10 @@ export function NoticeBanner() {
     <Card className="p-4 text-sm relative">
       <div className="flex justify-between items-center font-semibold mb-2">
         <CardTitle>공지 및 이벤트</CardTitle>
-        <Link href="/community" className="text-gray-400 hover:text-gray-600 transition">
+        <Link
+          href={{ pathname: '/community', query: { tab: '공지 및 이벤트' } }}
+          className="text-gray-400 hover:text-gray-600 transition"
+        >
           <ChevronRight size={16} />
         </Link>
       </div>

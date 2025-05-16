@@ -4,12 +4,12 @@ import { Button } from "@/components/ui/button";
 import { SortType } from "@/types/coin";
 import clsx from "clsx";
 
-interface CoinSidebarProps {
+interface Props {
     onSortChange: (sortType: SortType) => void;
     selectedSort: SortType;
 }
 
-export function Sidebar({ onSortChange, selectedSort }: CoinSidebarProps) {
+export function Sidebar({ onSortChange, selectedSort }: Props) {
     const renderButton = (label: string, type: SortType) => (
         <Button
             variant="ghost"
