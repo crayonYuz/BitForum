@@ -36,7 +36,7 @@ export function Navbar() {
                             <Link key={href} href={href}>
                                 <Button
                                     variant="ghost"
-                                    className={`text-base cursor-pointer ${pathname === href ? "text-blue-600" : "text-gray-500"} hover:bg-transparent hover:text-blue-600`}
+                                    className={`text-base cursor-pointer ${pathname === href ? "text-blue-600 font-semibold" : "text-gray-500 font-semibold"} hover:bg-transparent hover:text-blue-600`}
                                 >
                                     {label}
                                 </Button>

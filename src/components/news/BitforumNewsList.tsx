@@ -6,10 +6,10 @@ import Image from 'next/image'
 const dummyNews = [
     {
         id: 1,
-        title: '비트포럼 신규 기능 출시! 뉴스와 커뮤니티 시스템 개선 완료',
-        date: '2025. 5. 14',
-        content: '새로운 뉴스/커뮤니티 시스템을 도입하여 사용자 경험을 한층 강화했습니다.',
-        thumbnail: 'https://storage.cobak.co/webp_thumbnails/1747279621375620_92afebd2a8_thumb.webp',
+        title: '비트코인 200일 이동평균 하락, 스트래티지 50만 BTC 보유 위기?',
+        date: '2025. 5. 16',
+        content: '최근 비트코인 손실 가능성이 커지고 있으며, 이는 200일 이동평균선(MA)이 현재 가격보다 낮은 수준으로 유지되고 있기 때문이다. 이 지표는 장기 강세와 약세 전환 시점의 중요한 신호로 작용한다. 5월 15일(현지시간) 암호화폐 전문매체 비트코이니스트에 따르면, 전문',
+        thumbnail: 'https://storage.cobak.co/webp_thumbnails/1747356422313883_79dd17c70b_thumb.webp',
     },
     {
         id: 2,

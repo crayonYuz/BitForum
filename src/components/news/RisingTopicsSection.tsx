@@ -22,7 +22,8 @@ export function RisingTopicsSection({ title }: { title: string }) {
                     {topics.map((t, i) => (
                         <li
                             key={i}
-                            className="cursor-pointer rounded-md px-2 py-1 transition-colors hover:bg-gray-100"
+                            className="cursor-pointer rounded-md px-2 py-1 transition-colors hover:bg-gray-100 truncate overflow-hidden whitespace-nowrap"
+                            title={t}
                         >
                             {i + 1}. {t}
                         </li>

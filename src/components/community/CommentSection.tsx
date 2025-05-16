@@ -66,14 +66,21 @@ export const CommentSection = ({ postId }: Props) => {
                     value={content}
                     onChange={(e) => setContent(e.target.value)}
                 />
-                <div className="flex justify-end">
+                <div className="flex mt-4 justify-end">
                     <Button onClick={handleSubmit} disabled={createMutation.isPending}>
                         {createMutation.isPending ? '작성 중...' : '남기기'}
                     </Button>
                 </div>
             </div>
 
-            <ul className="space-y-3">
+            {comments.length === 0 && (
+                <div className="text-center text-gray-500 space-y-1 mt-6">
+                    <p className="text-black font-semibold">아직 작성된 댓글이 없어요</p>
+                    <p className="text-sm">로그인 후 댓글을 남겨보실 수 있습니다.</p>
+                </div>
+            )}
+
+            <ul className="space-y-3 mt-12">
                 {isLoading ? (
                     <li className="text-gray-400">댓글을 불러오는 중...</li>
                 ) : (
