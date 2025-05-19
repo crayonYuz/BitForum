@@ -16,6 +16,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getPosts, Post } from '@/lib/api/post/getPosts';
 import { useRouter } from 'next/navigation';
 import { CommunityHighlightSection } from '@/components/main/CommunityHighlightSection';
+import { Footer } from '@/components/layout/Footer';
 
 export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
@@ -83,7 +84,7 @@ export default function Page() {
               </div>
             </section>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-14">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
               <CommunityHighlightSection title="자유 게시판" posts={freeBoardPosts} />
               <CommunityHighlightSection title="초보자 가이드" posts={beginnerGuidePosts} />
             </div>
@@ -93,6 +94,8 @@ export default function Page() {
 
         </div>
       </div>
+
+      <Footer />
     </>
   );
 }
