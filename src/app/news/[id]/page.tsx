@@ -47,7 +47,7 @@ export default function Page() {
                     </Card>
                 </main>
 
-                <aside className="lg:w-1/4 space-y-6">
+                <aside className="hidden lg:block lg:w-1/4 space-y-6">
                     <FearGreedGauge />
                     <RisingTopicsSection title="상승 관점" />
                     <FallingTopicsSection title="하락 관점" />

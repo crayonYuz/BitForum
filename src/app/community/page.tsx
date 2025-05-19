@@ -82,7 +82,7 @@ export default function Page() {
                     )}
                 </div>
 
-                <aside className="lg:w-1/4 space-y-6">
+                <aside className="hidden lg:block lg:w-1/4 space-y-6">
                     <SidePanel />
                 </aside>
 
