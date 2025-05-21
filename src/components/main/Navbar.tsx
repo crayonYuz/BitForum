@@ -29,7 +29,7 @@ export function Navbar() {
             <header className="flex w-full h-14 border-b bg-white text-black px-4 py-2 items-center justify-between fixed top-0 left-0 right-0 z-50">
                 <div className="flex items-center gap-6">
                     <Link href="/">
-                        <img src="/bitforum_logo.svg" alt="비트포럼 로고" width={120} />
+                        <img src="/bitforum.svg" alt="비트포럼 로고" width={120} />
                     </Link>
                     <nav className="hidden md:flex gap-4">
                         {navItems.map(({ href, label }) => (
@@ -64,7 +64,7 @@ export function Navbar() {
                 </div>
             </header>
 
-            <nav className="fixed bottom-0 left-0 right-0 bg-white border-t shadow-md flex justify-around items-center h-14 md:hidden z-50">
+            <nav className="fixed bottom-0 left-0 right-0 mt-10 bg-white border-t shadow-md flex justify-around items-center h-14 md:hidden z-50">
                 {navItems.map(({ href, label, icon }) => (
                     <Link
                         key={href}
