@@ -25,12 +25,12 @@ export default function Page() {
     if (isError || !news) return <div className="p-6 text-red-500">뉴스를 불러오지 못했습니다.</div>;
 
     return (
-        <div className="bg-white min-h-screen text-gray-900 pt-6">
+        <div className="bg-white min-h-screen text-gray-900 pt-6 mb-20">
             <Navbar />
             <div className="max-w-7xl mx-auto px-4 pt-14 lg:flex lg:gap-6 justify-center">
                 <main className="lg:w-2/3 space-y-8">
                     <Card>
-                        <CardContent className="space-y-4">
+                        <CardContent className="space-y-4 mb-10">
                             <div>
                                 <div className="text-sm text-gray-400">실시간 코인 뉴스</div>
                                 <h1 className="text-2xl font-bold mt-2">{decodeHtmlEntities(news.title.rendered)}</h1>
@@ -47,7 +47,7 @@ export default function Page() {
                     </Card>
                 </main>
 
-                <aside className="lg:w-1/4 space-y-6">
+                <aside className="hidden lg:block lg:w-1/4 space-y-6">
                     <FearGreedGauge />
                     <RisingTopicsSection title="상승 관점" />
                     <FallingTopicsSection title="하락 관점" />

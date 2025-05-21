@@ -13,6 +13,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Sidebar } from "@/components/coin/Sidebar";
 import { sortCoins } from "@/utils/sortCoins";
 import { getTitleAndDescription } from "@/utils/getTitleAndDescription";
+import { MobileTabs } from "@/components/coinInfo/MobileTabs";
 
 export default function Page() {
     const { data = [], isLoading, isError } = useQuery({
@@ -35,15 +36,19 @@ export default function Page() {
     return (
         <>
             <Navbar />
-            <div className="flex px-4 py-6 gap-6 pt-20">
+            <div className="block md:hidden px-4 pt-20">
+                <MobileTabs selectedSort={sortType} onSortChange={setSortType} />
+            </div>
+
+            <div className="flex px-4 py-6 gap-6 pt-6 md:pt-20">
                 <aside
-                    className="w-64 shrink-0 border-r overflow-y-auto"
+                    className="hidden md:block w-64 shrink-0 border-r overflow-y-auto"
                     style={{ height: "calc(100vh - 128px)" }}
                 >
                     <Sidebar onSortChange={setSortType} selectedSort={sortType} />
                 </aside>
 
-                <main className="flex-1 max-w-screen-2xl mx-auto mt-6">
+                <main className="flex-1 max-w-screen-2xl mx-auto">
                     <div className="space-y-4">
                         <div>
                             <h2 className="text-lg font-semibold">{title}</h2>
@@ -54,7 +59,9 @@ export default function Page() {
                         </div>
 
                         <div className="border rounded-xl overflow-hidden">
-                            <CoinTableHeader />
+                            <div className="hidden sm:block">
+                                <CoinTableHeader />
+                            </div>
                             <ScrollArea className="h-[610px]">
                                 {isLoading && (
                                     <div className="p-4 text-sm text-muted-foreground">불러오는 중...</div>

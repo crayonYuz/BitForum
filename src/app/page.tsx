@@ -16,6 +16,7 @@ import { useQuery } from '@tanstack/react-query';
 import { getPosts, Post } from '@/lib/api/post/getPosts';
 import { useRouter } from 'next/navigation';
 import { CommunityHighlightSection } from '@/components/main/CommunityHighlightSection';
+import { Footer } from '@/components/layout/Footer';
 
 export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
@@ -45,7 +46,7 @@ export default function Page() {
 
           <LeftBanner />
 
-          <main className="w-full lg:w-2/4 space-y-8 pt-12 mx-auto">
+          <main className="w-full lg:w-2/4 space-y-8 pt-12 pb-20 mx-auto">
             {isLoading ? <Skeleton className="h-24 w-full rounded-lg" /> : <AffiliateProgram />}
             {isLoading ? <Skeleton className="h-16 w-full rounded-lg" /> : <CoinTickerWidget />}
 
@@ -83,7 +84,7 @@ export default function Page() {
               </div>
             </section>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 pb-14">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
               <CommunityHighlightSection title="자유 게시판" posts={freeBoardPosts} />
               <CommunityHighlightSection title="초보자 가이드" posts={beginnerGuidePosts} />
             </div>
@@ -93,6 +94,8 @@ export default function Page() {
 
         </div>
       </div>
+
+      <Footer />
     </>
   );
 }
