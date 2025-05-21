@@ -6,7 +6,7 @@ interface Props {
     onTabChange: (tab: string) => void;
 }
 
-export function CommunityTabs({ tabs, selectedTab, onTabChange }: Props) {
+export function CustomTabs({ tabs, selectedTab, onTabChange }: Props) {
     return (
         <div className="flex gap-4">
             {tabs.map((tab) => (

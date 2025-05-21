@@ -9,9 +9,9 @@ import { SidePanel } from "@/components/community/SidePanel";
 import { Button } from "@/components/ui/button";
 import { Edit } from "lucide-react";
 import { AffiliateBanner } from "@/components/affiliate/AffiliateBanner";
-import { CommunityTabs } from "@/components/community/CommunityTabs";
 import { CommunityItem } from "@/components/community/CommuityItem";
 import { getPosts, Post } from "@/lib/api/post/getPosts";
+import { CustomTabs } from "@/components/CustomTabs";
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -22,7 +22,11 @@ export default function Page() {
 
     useEffect(() => {
         const initialTab = searchParams.get("tab");
-        if (initialTab) setSelectedTab(initialTab);
+        if (!initialTab) {
+            router.replace(`/community?tab=${encodeURIComponent('전체')}`);
+        } else {
+            setSelectedTab(initialTab);
+        }
     }, [searchParams]);
 
     const { data: posts = [], isLoading, isError } = useQuery<Post[]>({
@@ -51,12 +55,12 @@ export default function Page() {
         <div className="bg-white min-h-screen text-gray-900 pt-6">
             <Navbar />
 
-            <div className="max-w-7xl mx-auto px-4 pt-14 lg:flex lg:gap-6 justify-center">
+            <div className="max-w-7xl mx-auto px-4 pt-14 pb-20 lg:flex lg:gap-6 justify-center">
                 <div className="lg:w-2/3 space-y-6">
                     <AffiliateBanner />
                     <h2 className="text-2xl font-semibold text-gray-800">커뮤니티</h2>
 
-                    <CommunityTabs
+                    <CustomTabs
                         tabs={tabs}
                         selectedTab={selectedTab}
                         onTabChange={(tab) => {

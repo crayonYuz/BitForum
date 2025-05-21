@@ -2,7 +2,7 @@
 
 export function Footer() {
     return (
-        <footer className="w-full py-6 text-center text-sm text-black border-t mt-8">
+        <footer className="hidden lg:block w-full text-center py-6 text-sm text-gray-500 border-t">
             © 2025 Bitforum. All rights reserved.
         </footer>
     );

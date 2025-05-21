@@ -46,7 +46,7 @@ export default function Page() {
 
           <LeftBanner />
 
-          <main className="w-full lg:w-2/4 space-y-8 pt-12 mx-auto">
+          <main className="w-full lg:w-2/4 space-y-8 pt-12 pb-20 mx-auto">
             {isLoading ? <Skeleton className="h-24 w-full rounded-lg" /> : <AffiliateProgram />}
             {isLoading ? <Skeleton className="h-16 w-full rounded-lg" /> : <CoinTickerWidget />}
 
