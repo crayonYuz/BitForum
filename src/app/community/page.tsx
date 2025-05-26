@@ -93,7 +93,7 @@ export default function Page() {
                 {session && (
                     <Button
                         onClick={handleWriteClick}
-                        className="fixed bottom-10 right-10 p-4 bg-blue-600 text-white rounded-full shadow-lg"
+                        className="fixed bottom-20 md:bottom-24 right-6 p-4 bg-blue-600 text-white rounded-full shadow-lg z-50"
                     >
                         <Edit size={24} />
                     </Button>
