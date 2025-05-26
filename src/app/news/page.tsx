@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getCoinNews, CoinNews } from '@/lib/api/news/getCoinNews';
 
@@ -10,11 +10,11 @@ import { NewsSourceList } from "@/components/news/NewsSourceList";
 import { RisingTopicsSection } from "@/components/news/RisingTopicsSection";
 import { FallingTopicsSection } from "@/components/news/FallingTopicsSection";
 import { AffiliateBanner } from "@/components/affiliate/AffiliateBanner";
-import { CustomTabs } from '@/components/CustomTabs';
+import { CustomTabs } from '@/components/community/CommunityTabs';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { NewsTabContent } from '@/components/news/NewsTabContent';
 
-export default function Page() {
+function NewsPage() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const tabs = ['홈', '비트포럼 뉴스', '미국 증시', '코인 뉴스'];
@@ -33,7 +33,7 @@ export default function Page() {
         } else {
             setSelectedTab(initialTab);
         }
-    }, [searchParams]);
+    }, [searchParams, router]);
 
     return (
         <div className="bg-white min-h-screen text-gray-900 pt-6">
@@ -70,5 +70,12 @@ export default function Page() {
             </div>
         </div>
     );
+}
 
+export default function Page() {
+    return (
+        <Suspense fallback={<div className="p-4 text-center">로딩 중...</div>}>
+            <NewsPage />
+        </Suspense>
+    );
 }

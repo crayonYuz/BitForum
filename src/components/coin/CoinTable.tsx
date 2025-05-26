@@ -4,9 +4,10 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "../ui/table";
 import { useQuery } from "@tanstack/react-query";
 import { getCryptoPrices } from "@/lib/fetchCoins";
+import { Coin } from "@/types/coin";
 
 export function CoinTable() {
-    const { data: coins, isLoading, error } = useQuery({
+    const { data: coins, isLoading, error } = useQuery<Coin[]>({
         queryKey: ["cryptoPrices"],
         queryFn: getCryptoPrices,
     });
@@ -30,34 +31,31 @@ export function CoinTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {coins?.map((coin: any, index: number) => (
+                    {coins?.map((coin, index) => (
                         <TableRow key={coin.id}>
                             <TableCell className="text-center">{index + 1}</TableCell>
                             <TableCell>
                                 <div className="flex items-center gap-2">
-                                    <img src={coin.image} className="w-5 h-5" />
+                                    <img src={coin.image} alt="로고" className="w-5 h-5" />
                                     {coin.name}
                                     <span className="text-xs text-gray-500">{coin.symbol.toUpperCase()}</span>
                                 </div>
                             </TableCell>
                             <TableCell className="text-right">{coin.current_price.toLocaleString()}원</TableCell>
                             <TableCell
-                                className={`text-right ${coin.price_change_percentage_1h_in_currency >= 0 ? "text-green-500" : "text-red-500"
-                                    }`}
+                                className={`text-right ${coin.price_change_percentage_1h >= 0 ? "text-green-500" : "text-red-500"}`}
                             >
-                                {coin.price_change_percentage_1h_in_currency?.toFixed(2)}%
+                                {coin.price_change_percentage_1h?.toFixed(2)}%
                             </TableCell>
                             <TableCell
-                                className={`text-right ${coin.price_change_percentage_24h_in_currency >= 0 ? "text-green-500" : "text-red-500"
-                                    }`}
+                                className={`text-right ${coin.price_change_percentage_24h >= 0 ? "text-green-500" : "text-red-500"}`}
                             >
-                                {coin.price_change_percentage_24h_in_currency?.toFixed(2)}%
+                                {coin.price_change_percentage_24h?.toFixed(2)}%
                             </TableCell>
                             <TableCell
-                                className={`text-right ${coin.price_change_percentage_7d_in_currency >= 0 ? "text-green-500" : "text-red-500"
-                                    }`}
+                                className={`text-right ${coin.price_change_percentage_7d >= 0 ? "text-green-500" : "text-red-500"}`}
                             >
-                                {coin.price_change_percentage_7d_in_currency?.toFixed(2)}%
+                                {coin.price_change_percentage_7d?.toFixed(2)}%
                             </TableCell>
                             <TableCell className="text-right">{coin.total_volume.toLocaleString()}원</TableCell>
                             <TableCell className="text-right">{coin.market_cap.toLocaleString()}원</TableCell>

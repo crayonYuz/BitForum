@@ -14,13 +14,11 @@ import { useState, useEffect } from 'react';
 import { InfoCardSkeleton } from '@/components/main/InfoCardSkeleton';
 import { useQuery } from '@tanstack/react-query';
 import { getPosts, Post } from '@/lib/api/post/getPosts';
-import { useRouter } from 'next/navigation';
 import { CommunityHighlightSection } from '@/components/main/CommunityHighlightSection';
 import { Footer } from '@/components/layout/Footer';
 
 export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
-  const router = useRouter();
 
   const { data: posts } = useQuery<Post[]>({
     queryKey: ['posts'],
@@ -51,7 +49,7 @@ export default function Page() {
             {isLoading ? <Skeleton className="h-16 w-full rounded-lg" /> : <CoinTickerWidget />}
 
             <section>
-              <SectionTitle title="비트포럼 뉴스" subtitle="비트포럼만의 오리지널 콘텐츠" />
+              <SectionTitle title="비트포럼 뉴스" />
               {isLoading ? <ForumNewsCardsSkeleton /> : <ForumNewsCards />}
             </section>
 
