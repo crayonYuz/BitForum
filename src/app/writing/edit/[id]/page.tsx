@@ -5,11 +5,12 @@ import { useRouter, useParams } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { getPost } from '@/lib/api/post/getPost';
-import { updatePost } from '@/lib/api/post/updatePost';
+import { updatePost, UpdatePostData } from '@/lib/api/post/updatePost';
 import { Button } from '@/components/ui/button';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Navbar } from '@/components/main/Navbar';
 import { useSession } from 'next-auth/react';
+import { Editor as ToastEditorType } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 import { toast } from "sonner"
 
@@ -19,7 +20,7 @@ export default function Page() {
     const router = useRouter();
     const { id } = useParams();
     const { data: session } = useSession();
-    const editorRef = useRef<any>(null);
+    const editorRef = useRef<ToastEditorType>(null);
 
     const { data: post, isLoading } = useQuery({
         queryKey: ['post', id],
@@ -36,10 +37,10 @@ export default function Page() {
             setCategory(post.category);
             editorRef.current?.getInstance()?.setMarkdown(post.content);
         }
-    }, [post]);
+    }, [post, router]);
 
     const mutation = useMutation({
-        mutationFn: (data: any) => updatePost(id as string, data),
+        mutationFn: (data: UpdatePostData) => updatePost(id as string, data),
         onSuccess: () => {
             toast.success('수정되었습니다.');
             router.push(`/community/${id}`);
@@ -72,7 +73,7 @@ export default function Page() {
             <div className="max-w-4xl mx-auto p-6 space-y-6 mt-14">
                 <h1 className="text-2xl font-bold">글 수정하기</h1>
 
-                <Select value={category} onValueChange={(val) => setCategory(val as any)}>
+                <Select value={category} onValueChange={(val: 'free' | 'coin-info' | 'beginner-guide') => setCategory(val)}>
                     <SelectTrigger className="w-full p-2 border rounded">
                         <SelectValue placeholder="카테고리 선택" />
                     </SelectTrigger>
