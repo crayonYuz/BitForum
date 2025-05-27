@@ -1,14 +1,14 @@
 'use client'
 
-import { useEffect } from 'react';
+import { Suspense, useEffect } from 'react';
 import { Button } from '@/components/ui/button';
 import { useSession, signIn } from 'next-auth/react';
-import { MessageCircleMore, Speech, Chrome } from 'lucide-react';
+import { MessageCircleMore, Speech } from 'lucide-react';
 import { Navbar } from '@/components/main/Navbar';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { GoogleLoginButton } from '@/components/auth/GoogleLoginButton';
 
-export default function Page() {
+function LoginPage() {
     const { data: session } = useSession();
     const searchParams = useSearchParams();
     const error = searchParams.get('error');
@@ -59,5 +59,13 @@ export default function Page() {
                 </div>
             </main>
         </>
+    );
+}
+
+export default function Page() {
+    return (
+        <Suspense fallback={<div className="p-4 text-center">로딩 중...</div>}>
+            <LoginPage />
+        </Suspense>
     );
 }

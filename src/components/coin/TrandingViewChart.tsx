@@ -12,7 +12,7 @@ export function TradingViewChart({ symbol }: { symbol: string }) {
         script.src = 'https://s3.tradingview.com/tv.js';
         script.async = true;
         script.onload = () => {
-            // @ts-ignore
+            // @ts-expect-error: TradingView is from external script, not typed
             new window.TradingView.widget({
                 width: '100%',
                 height: 500,

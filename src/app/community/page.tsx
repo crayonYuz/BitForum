@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
 import { useRouter, useSearchParams } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -11,9 +11,9 @@ import { Edit } from "lucide-react";
 import { AffiliateBanner } from "@/components/affiliate/AffiliateBanner";
 import { CommunityItem } from "@/components/community/CommuityItem";
 import { getPosts, Post } from "@/lib/api/post/getPosts";
-import { CustomTabs } from "@/components/CustomTabs";
+import { CustomTabs } from "@/components/community/CommunityTabs";
 
-export default function Page() {
+function CommunityPageClient() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const [selectedTab, setSelectedTab] = useState("전체");
@@ -27,7 +27,7 @@ export default function Page() {
         } else {
             setSelectedTab(initialTab);
         }
-    }, [searchParams]);
+    }, [searchParams, router]);
 
     const { data: posts = [], isLoading, isError } = useQuery<Post[]>({
         queryKey: ['posts'],
@@ -100,5 +100,13 @@ export default function Page() {
                 )}
             </div>
         </div>
+    );
+}
+
+export default function Page() {
+    return (
+        <Suspense fallback={<div className="p-4 text-center">로딩 중...</div>}>
+            <CommunityPageClient />
+        </Suspense>
     );
 }

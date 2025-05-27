@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import dynamic from 'next/dynamic';
 import { Button } from '@/components/ui/button';
@@ -10,6 +10,7 @@ import { useMutation } from '@tanstack/react-query';
 import { createPost } from '@/lib/api/post/posts';
 import { useSession } from 'next-auth/react';
 import { toast } from "sonner"
+import { Editor as ToastEditorType } from '@toast-ui/react-editor';
 import '@toast-ui/editor/dist/toastui-editor.css';
 
 const ToastEditor = dynamic(() => import('@toast-ui/react-editor').then(mod => mod.Editor), {
@@ -18,7 +19,7 @@ const ToastEditor = dynamic(() => import('@toast-ui/react-editor').then(mod => m
 
 export default function Page() {
     const router = useRouter();
-    const editorRef = useRef<any>(null);
+    const editorRef = useRef<ToastEditorType>(null);
     const [title, setTitle] = useState('');
     const [category, setCategory] = useState<'free' | 'coin-info' | 'beginner-guide'>('free');
 
@@ -69,7 +70,7 @@ export default function Page() {
                 <h1 className="text-2xl font-bold">글 작성하기</h1>
 
                 <div>
-                    <Select value={category} onValueChange={(val) => setCategory(val as any)}>
+                    <Select value={category} onValueChange={(val: 'free' | 'coin-info' | 'beginner-guide') => setCategory(val)}>
                         <SelectTrigger className="w-full p-2 border rounded">
                             <SelectValue placeholder="카테고리 선택" />
                         </SelectTrigger>
