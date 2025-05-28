@@ -68,8 +68,8 @@ export function ForumNewsCards() {
                     </CarouselItem>
                 ))}
             </CarouselContent>
-            <CarouselPrevious className="ml-10" />
-            <CarouselNext className="mr-10" />
+            <CarouselPrevious className="ml-10 cursor-pointer" />
+            <CarouselNext className="mr-10 cursor-pointer" />
         </Carousel>
     );
 }

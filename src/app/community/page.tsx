@@ -11,13 +11,13 @@ import { Edit } from "lucide-react";
 import { AffiliateBanner } from "@/components/affiliate/AffiliateBanner";
 import { CommunityItem } from "@/components/community/CommuityItem";
 import { getPosts, Post } from "@/lib/api/post/getPosts";
-import { CustomTabs } from "@/components/community/CommunityTabs";
+import { CustomTabs } from "@/components/community/CustomTabs";
 
 function CommunityPageClient() {
     const searchParams = useSearchParams();
     const router = useRouter();
     const [selectedTab, setSelectedTab] = useState("전체");
-    const tabs = ["전체", "자유게시판", "코인 정보", "초보자 가이드", "공지 및 이벤트"];
+    const tabs = ["전체", "자유게시판", "코인 정보", "거래소 정보", "초보자 가이드", "공지 및 이벤트"];
     const { data: session } = useSession();
 
     useEffect(() => {

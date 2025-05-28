@@ -61,7 +61,7 @@ export default function Page() {
     return (
         <div className="bg-white min-h-screen text-gray-900 pt-6">
             <Navbar />
-            <div className="max-w-7xl mx-auto px-4 pt-14 lg:flex lg:gap-6 mb-20">
+            <div className="max-w-7xl mx-auto px-4 pt-14 lg:flex lg:gap-6 mb-20 lg:flex lg:gap-6 justify-center">
                 <main className="lg:w-2/3 space-y-8">
                     <AffiliateBanner />
                     <Card>
