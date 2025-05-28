@@ -38,7 +38,7 @@ function CommunityPageClient() {
         router.push("/writing");
     };
 
-    const sortedPosts = posts.sort((a, b) =>
+    const sortedPosts = posts.sort((a: Post, b: Post) =>
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
 
