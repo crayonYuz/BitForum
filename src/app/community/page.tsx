@@ -13,8 +13,6 @@ import { CommunityItem } from "@/components/community/CommuityItem";
 import { getPosts, Post } from "@/lib/api/post/getPosts";
 import { CustomTabs } from "@/components/community/CustomTabs";
 
-type PostSortFn = (a: Post, b: Post) => number;
-
 function CommunityPageClient() {
     const searchParams = useSearchParams();
     const router = useRouter();
@@ -40,10 +38,9 @@ function CommunityPageClient() {
         router.push("/writing");
     };
 
-    const sortByCreatedAt: PostSortFn = (a, b) =>
-        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-
-    const sortedPosts = posts.sort(sortByCreatedAt);
+    const sortedPosts = posts.sort((a: Post, b: Post) =>
+        new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
+    );
 
     const filteredCommunity = sortedPosts.filter((item) => {
         if (selectedTab === "전체") return true;
