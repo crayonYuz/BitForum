@@ -28,6 +28,8 @@ jobs:
       - name: Build and Restart frontend
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+            export NVM_DIR="$HOME/.nvm"
+            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             export PATH=$PATH:/home/ubuntu/.local/share/pnpm
             cd ~/frontend
             pnpm install
