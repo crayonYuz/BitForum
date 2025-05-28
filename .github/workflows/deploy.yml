@@ -22,8 +22,12 @@ jobs:
 
       - name: Sync code to EC2
         run: |
-          rsync -avz --exclude=node_modules --exclude=.next \
+          rsync -avz --exclude=node_modules --exclude=.next --exclude=.env.production \
             -e "ssh -i ~/.ssh/id_rsa" ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/frontend
+
+      - name: Upload .env file
+        run: |
+          ssh -i ~/.ssh/id_rsa ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "echo '${{ secrets.ENV_FILE }}' > ~/frontend/.env.production"
 
       - name: Build and Restart frontend
         run: |
@@ -32,8 +36,14 @@ jobs:
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             export PATH=$PATH:/home/ubuntu/.local/share/pnpm
             cd ~/frontend
+
             pnpm install
-            pnpm prisma generate
+
+            if [ -f prisma/schema.prisma ]; then
+              pnpm prisma generate
+            fi
+
             pnpm build
-            pm2 restart frontend
+
+            pm2 restart frontend || pm2 start "pnpm start" --name frontend
           EOF
