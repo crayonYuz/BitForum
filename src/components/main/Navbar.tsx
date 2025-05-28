@@ -45,10 +45,18 @@ export function Navbar() {
                         ))}
                     </nav>
                 </div>
-                <div>
+
+                <div className="flex items-center gap-2">
+                    {session && (
+                        <Link href="/writing" className="hidden md:block">
+                            <Button className="bg-blue-600 text-white rounded-md px-5 py-2 text-sm font-semibold hover:bg-blue-700">
+                                글쓰기
+                            </Button>
+                        </Link>
+                    )}
                     {!session ? (
                         <Link href="/login">
-                            <Button variant="ghost" className="text-md font-bold text-gray-500 hover:text-blue-600 cursor-pointer   ">
+                            <Button variant="ghost" className="text-md font-bold text-gray-500 hover:text-blue-600 cursor-pointer">
                                 로그인
                             </Button>
                         </Link>
