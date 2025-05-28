@@ -10,7 +10,7 @@ import { NewsSourceList } from "@/components/news/NewsSourceList";
 import { RisingTopicsSection } from "@/components/news/RisingTopicsSection";
 import { FallingTopicsSection } from "@/components/news/FallingTopicsSection";
 import { AffiliateBanner } from "@/components/affiliate/AffiliateBanner";
-import { CustomTabs } from '@/components/community/CommunityTabs';
+import { CustomTabs } from '@/components/community/CustomTabs';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { NewsTabContent } from '@/components/news/NewsTabContent';
 

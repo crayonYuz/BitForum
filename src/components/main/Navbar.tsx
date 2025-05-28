@@ -29,15 +29,15 @@ export function Navbar() {
             <header className="flex w-full h-14 border-b bg-white text-black px-4 py-2 items-center justify-between fixed top-0 left-0 right-0 z-50">
                 <div className="flex items-center gap-6">
                     <Link href="/">
-                        <img src="/bitforum.svg" alt="비트포럼 로고" width={120} />
+                        <img src="/bitforum.svg" alt="비트포럼 로고" width={130} />
                     </Link>
                     <nav className="hidden md:flex gap-4">
                         {navItems.map(({ href, label }) => (
                             <Link key={href} href={href}>
                                 <Button
                                     variant="ghost"
-                                    className={`text-sm font-bold ${isActive(href) ? "text-blue-600" : "text-gray-500"
-                                        } hover:bg-transparent hover:text-blue-600`}
+                                    className={`text-md font-bold ${isActive(href) ? "text-blue-600" : "text-gray-500"
+                                        } hover:bg-transparent hover:text-blue-600 cursor-pointer`}
                                 >
                                     {label}
                                 </Button>
@@ -45,10 +45,18 @@ export function Navbar() {
                         ))}
                     </nav>
                 </div>
-                <div>
+
+                <div className="flex items-center gap-2">
+                    {session && (
+                        <Link href="/writing" className="hidden md:block">
+                            <Button className="bg-blue-600 text-white rounded-md px-5 py-2 text-sm font-semibold hover:bg-blue-700">
+                                글쓰기
+                            </Button>
+                        </Link>
+                    )}
                     {!session ? (
                         <Link href="/login">
-                            <Button variant="ghost" className="text-sm font-bold text-gray-500 hover:text-blue-600">
+                            <Button variant="ghost" className="text-md font-bold text-gray-500 hover:text-blue-600 cursor-pointer">
                                 로그인
                             </Button>
                         </Link>
@@ -56,7 +64,7 @@ export function Navbar() {
                         <Button
                             variant="ghost"
                             onClick={() => signOut({ callbackUrl: '/' })}
-                            className="text-sm font-bold text-gray-500 hover:text-blue-600"
+                            className="text-md font-bold text-gray-500 hover:text-blue-600 cursor-pointer"
                         >
                             로그아웃
                         </Button>
