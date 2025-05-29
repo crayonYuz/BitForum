@@ -1,12 +1,5 @@
 import axios from 'axios'
-
-export interface Comment {
-  id: number
-  postId: number
-  author: string
-  content: string
-  createdAt: string
-}
+import { Comment } from '@/types/comments'
 
 export const getComments = async (postId: string): Promise<Comment[]> => {
   const response = await axios.get(

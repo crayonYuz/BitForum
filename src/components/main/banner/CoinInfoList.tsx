@@ -22,7 +22,7 @@ export function CoinInfoList() {
   const [query, setQuery] = useState('');
   const coinsPerPage = 10;
 
-  const filteredData = data?.filter((coin) =>
+  const filteredData = data?.filter((coin: Coin) =>
     coin.name.toLowerCase().includes(query.toLowerCase()) ||
     coin.symbol.toLowerCase().includes(query.toLowerCase())
   ) ?? [];
@@ -50,7 +50,7 @@ export function CoinInfoList() {
       {isError && <div className="text-sm text-red-500 mt-4">에러가 발생했습니다.</div>}
 
       <ul>
-        {currentCoins.map((coin) => (
+        {currentCoins.map((coin: Coin) => (
           <CoinRow
             key={coin.id}
             id={coin.id}

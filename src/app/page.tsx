@@ -33,8 +33,8 @@ export default function Page() {
     return () => clearTimeout(timer);
   }, []);
 
-  const freeBoardPosts = posts?.filter(post => post.category === 'free') || [];
-  const beginnerGuidePosts = posts?.filter(post => post.category === 'beginner-guide') || [];
+  const freeBoardPosts = posts?.filter((post: Post) => post.category === 'free') || [];
+  const beginnerGuidePosts = posts?.filter((post: Post) => post.category === 'beginner-guide') || [];
 
   return (
     <>
