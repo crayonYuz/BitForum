@@ -28,6 +28,12 @@ const handler = NextAuth({
     async redirect() {
       return '/'
     },
+    async session({ session, user }) {
+      if (session.user) {
+        session.user.role = user.role
+      }
+      return session
+    },
   },
 })
 

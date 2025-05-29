@@ -7,7 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Navbar } from '@/components/main/Navbar';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { useMutation } from '@tanstack/react-query';
-import { createPost } from '@/lib/api/post/posts';
+import { createPost, CreateProps } from '@/lib/api/post/posts';
 import { useSession } from 'next-auth/react';
 import { toast } from "sonner"
 import { Editor as ToastEditorType } from '@toast-ui/react-editor';
@@ -21,9 +21,23 @@ export default function Page() {
     const router = useRouter();
     const editorRef = useRef<ToastEditorType>(null);
     const [title, setTitle] = useState('');
-    const [category, setCategory] = useState<'free' | 'coin-info' | 'beginner-guide'>('free');
+    const [category, setCategory] = useState<CreateProps['category']>('free');
 
     const { data: session } = useSession();
+
+    const isAdmin = session?.user?.role === 'ADMIN';
+
+    const categoryOptions: { value: CreateProps['category'], label: string }[] = isAdmin
+        ? [
+            { value: 'free', label: '자유게시판' },
+            { value: 'coin-info', label: '코인정보' },
+            { value: 'exchange-info', label: '거래소정보' },
+            { value: 'beginner-guide', label: '초보자 가이드' },
+            { value: 'notice', label: '공지 및 이벤트' },
+        ]
+        : [
+            { value: 'free', label: '자유게시판' },
+        ];
 
     const mutation = useMutation({
         mutationFn: createPost,
@@ -75,8 +89,11 @@ export default function Page() {
                             <SelectValue placeholder="카테고리 선택" />
                         </SelectTrigger>
                         <SelectContent>
-                            <SelectItem value="free">자유게시판</SelectItem>
-                            <SelectItem value="coin-info">코인정보</SelectItem>
+                            {categoryOptions.map((opt) => (
+                                <SelectItem key={opt.value} value={opt.value}>
+                                    {opt.label}
+                                </SelectItem>
+                            ))}
                         </SelectContent>
                     </Select>
                 </div>
