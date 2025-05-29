@@ -31,7 +31,7 @@ export function CoinTable() {
                     </TableRow>
                 </TableHeader>
                 <TableBody>
-                    {coins?.map((coin, index) => (
+                    {coins?.map((coin: Coin, index: number) => (
                         <TableRow key={coin.id}>
                             <TableCell className="text-center">{index + 1}</TableCell>
                             <TableCell>
@@ -42,19 +42,13 @@ export function CoinTable() {
                                 </div>
                             </TableCell>
                             <TableCell className="text-right">{coin.current_price.toLocaleString()}원</TableCell>
-                            <TableCell
-                                className={`text-right ${coin.price_change_percentage_1h >= 0 ? "text-green-500" : "text-red-500"}`}
-                            >
+                            <TableCell className={`text-right ${coin.price_change_percentage_1h >= 0 ? "text-green-500" : "text-red-500"}`}>
                                 {coin.price_change_percentage_1h?.toFixed(2)}%
                             </TableCell>
-                            <TableCell
-                                className={`text-right ${coin.price_change_percentage_24h >= 0 ? "text-green-500" : "text-red-500"}`}
-                            >
+                            <TableCell className={`text-right ${coin.price_change_percentage_24h >= 0 ? "text-green-500" : "text-red-500"}`}>
                                 {coin.price_change_percentage_24h?.toFixed(2)}%
                             </TableCell>
-                            <TableCell
-                                className={`text-right ${coin.price_change_percentage_7d >= 0 ? "text-green-500" : "text-red-500"}`}
-                            >
+                            <TableCell className={`text-right ${coin.price_change_percentage_7d >= 0 ? "text-green-500" : "text-red-500"}`}>
                                 {coin.price_change_percentage_7d?.toFixed(2)}%
                             </TableCell>
                             <TableCell className="text-right">{coin.total_volume.toLocaleString()}원</TableCell>

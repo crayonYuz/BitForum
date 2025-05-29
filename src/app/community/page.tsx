@@ -42,7 +42,7 @@ function CommunityPageClient() {
         new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()
     );
 
-    const filteredCommunity = sortedPosts.filter((item) => {
+    const filteredCommunity = sortedPosts.filter((item: Post) => {
         if (selectedTab === "전체") return true;
         if (selectedTab === "자유게시판") return item.category === "free";
         if (selectedTab === "코인 정보") return item.category === "coin-info";

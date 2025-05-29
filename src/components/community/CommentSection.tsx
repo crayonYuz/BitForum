@@ -10,6 +10,7 @@ import { deleteComment } from '@/lib/api/comments/deleteComment';
 import { getTimeAgo } from '@/utils/dataUtils';
 import { Trash2 } from 'lucide-react';
 import { toast } from 'sonner';
+import { Comment } from '@/types/comments';
 
 interface Props {
     postId: string;
@@ -20,7 +21,7 @@ export const CommentSection = ({ postId }: Props) => {
     const queryClient = useQueryClient();
     const [content, setContent] = useState('');
 
-    const { data: comments = [], isLoading } = useQuery({
+    const { data: comments = [], isLoading } = useQuery<Comment[]>({
         queryKey: ['comments', postId],
         queryFn: () => getComments(postId),
     });
@@ -84,7 +85,7 @@ export const CommentSection = ({ postId }: Props) => {
                 {isLoading ? (
                     <li className="text-gray-400">댓글을 불러오는 중...</li>
                 ) : (
-                    comments.map((comment) => {
+                    comments.map((comment: Comment) => {
                         const isAuthor = session?.user?.name === comment.author;
                         return (
                             <li key={comment.id} className="text-sm text-gray-800 border-b pb-2 relative">
