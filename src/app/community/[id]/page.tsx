@@ -57,6 +57,7 @@ export default function Page() {
     const categoryName = categoryMap[post.category] || post.category;
     const formattedTime = getTimeAgo(post.createdAt);
     const isAuthor = session?.user?.name === post.author;
+    const isAdmin = session?.user?.role === 'ADMIN';
 
     return (
         <div className="bg-white min-h-screen text-gray-900 pt-6">
@@ -66,13 +67,15 @@ export default function Page() {
                     <AffiliateBanner />
                     <Card>
                         <CardContent className="relative space-y-4">
-                            {isAuthor && (
+                            {(isAuthor || isAdmin) && (
                                 <DropdownMenu>
                                     <DropdownMenuTrigger className="absolute top-4 right-4 p-2 rounded hover:bg-gray-100">
                                         <MoreHorizontal />
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
-                                        <DropdownMenuItem onClick={handleEdit}>수정하기</DropdownMenuItem>
+                                        {isAuthor && (
+                                            <DropdownMenuItem onClick={handleEdit}>수정하기</DropdownMenuItem>
+                                        )}
                                         <DropdownMenuItem onClick={handleDelete} className="text-red-500">삭제하기</DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>

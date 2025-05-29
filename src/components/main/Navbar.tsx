@@ -49,7 +49,7 @@ export function Navbar() {
                 <div className="flex items-center gap-2">
                     {session && (
                         <Link href="/writing" className="hidden md:block">
-                            <Button className="bg-blue-600 text-white rounded-md px-5 py-2 text-sm font-semibold hover:bg-blue-700">
+                            <Button className="bg-blue-600 text-white rounded-md px-5 py-2 text-sm font-semibold hover:bg-blue-700 cursor-pointer">
                                 글쓰기
                             </Button>
                         </Link>
