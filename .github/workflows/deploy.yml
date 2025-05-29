@@ -29,7 +29,7 @@ jobs:
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "echo '${{ secrets.ENV_FILE }}' > ~/frontend/.env.production"
 
-      - name: Build and Restart frontend
+      - name: Build and Restart frontend with timing
         run: |
           ssh -i ~/.ssh/id_rsa ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             export NVM_DIR="$HOME/.nvm"
@@ -37,13 +37,16 @@ jobs:
             export PATH=$PATH:/home/ubuntu/.local/share/pnpm
             cd ~/frontend
 
-            pnpm install
+            echo "Installing dependencies..."
+            time pnpm install
 
             if [ -f prisma/schema.prisma ]; then
+              echo "Generating Prisma client..."
               pnpm prisma generate
             fi
 
-            pnpm build
+            echo "Building frontend..."
+            time pnpm build
 
             pm2 restart frontend || pm2 start "pnpm start" --name frontend
           EOF
