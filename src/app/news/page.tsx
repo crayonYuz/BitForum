@@ -13,6 +13,7 @@ import { AffiliateBanner } from "@/components/affiliate/AffiliateBanner";
 import { CustomTabs } from '@/components/community/CustomTabs';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { NewsTabContent } from '@/components/news/NewsTabContent';
+import { getUSStockNews } from '@/lib/api/news/getUSStockNews';
 
 function NewsPage() {
     const searchParams = useSearchParams();
@@ -24,6 +25,12 @@ function NewsPage() {
         queryKey: ['coinNews'],
         queryFn: getCoinNews,
     });
+
+    const { data: usStockNews = [], isLoading: usLoading, isError: usError } = useQuery<CoinNews[]>({
+        queryKey: ['usStockNews'],
+        queryFn: getUSStockNews,
+    });
+
 
     useEffect(() => {
         const initialTab = searchParams.get("tab");
@@ -57,6 +64,9 @@ function NewsPage() {
                         isLoading={isLoading}
                         isError={isError}
                         news={news}
+                        usStockNews={usStockNews}
+                        usLoading={usLoading}
+                        usError={usError}
                     />
 
                 </div>

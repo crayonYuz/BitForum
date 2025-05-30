@@ -5,15 +5,27 @@ import { SectionTitle } from '@/components/news/SectionTitle';
 import { BitforumNewsList } from '@/components/news/BitforumNewsList';
 import { CoinNewsList } from '@/components/news/CoinNewsList';
 import { NewsSkeleton } from '@/components/news/NewsSkeleton';
+import { USStockNewsList } from '@/components/news/USStockNewsList';
 
 type Props = {
     selectedTab: string;
     isLoading: boolean;
     isError: boolean;
     news: CoinNews[];
+    usStockNews: CoinNews[];
+    usLoading: boolean;
+    usError: boolean;
 };
 
-export const NewsTabContent = ({ selectedTab, isLoading, isError, news }: Props) => {
+export const NewsTabContent = ({
+    selectedTab,
+    isLoading,
+    isError,
+    news,
+    usStockNews,
+    usLoading,
+    usError,
+}: Props) => {
     switch (selectedTab) {
         case '비트포럼 뉴스':
             return (
@@ -41,7 +53,13 @@ export const NewsTabContent = ({ selectedTab, isLoading, isError, news }: Props)
             return (
                 <div className="space-y-4">
                     <SectionTitle title="미국 증시 뉴스" />
-                    <p>미국 증시 뉴스 섹션은 준비 중입니다.</p>
+                    {usLoading ? (
+                        <NewsSkeleton />
+                    ) : usError ? (
+                        <p className="text-red-500">미국 증시 뉴스를 불러오지 못했습니다.</p>
+                    ) : (
+                        <USStockNewsList news={usStockNews} />
+                    )}
                 </div>
             );
 
