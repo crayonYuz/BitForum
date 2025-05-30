@@ -4,18 +4,18 @@ import { Navbar } from '../components/main/Navbar';
 import { LeftBanner } from '../components/main/banner/LeftBanner';
 import { CoinTickerWidget } from '../components/main/CoinTickerWidget';
 import { RightPanel } from '../components/main/banner/RightPanel';
-import { InfoCard } from '@/components/InfoCard';
 import { SectionTitle } from '@/components/news/SectionTitle';
 import { ForumNewsCards } from '@/components/main/ForumNewsCard';
 import { AffiliateProgram } from '@/components/affiliate/AffiliateProgram';
 import { ForumNewsCardsSkeleton } from '@/components/main/ForumNewsCardsSkeleton';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useState, useEffect } from 'react';
-import { InfoCardSkeleton } from '@/components/main/InfoCardSkeleton';
 import { useQuery } from '@tanstack/react-query';
 import { getPosts, Post } from '@/lib/api/post/getPosts';
 import { CommunityHighlightSection } from '@/components/main/CommunityHighlightSection';
 import { Footer } from '@/components/layout/Footer';
+import { UsStockNewsSection } from '@/components/main/UsStockNewsSection';
+import { CoinNewsSection } from '@/components/main/CoinNewsSection';
 
 export default function Page() {
   const [isLoading, setIsLoading] = useState(true);
@@ -53,21 +53,15 @@ export default function Page() {
               {isLoading ? <ForumNewsCardsSkeleton /> : <ForumNewsCards />}
             </section>
 
+
             <section>
-              <h2 className="text-xl font-bold mb-2">뉴스</h2>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                {[0, 1].map((i) => (
-                  <div className="col-span-1" key={i}>
-                    {isLoading ? (
-                      <InfoCardSkeleton />
-                    ) : (
-                      <InfoCard
-                        title={i === 0 ? '미국증시' : '코인 뉴스'}
-                        description="관련 뉴스가 여기에 표시됩니다."
-                      />
-                    )}
-                  </div>
-                ))}
+                <div className="col-span-1">
+                  <UsStockNewsSection />
+                </div>
+                <div className="col-span-1">
+                  <CoinNewsSection />
+                </div>
                 <div className="col-span-1 md:col-span-1">
                   {isLoading ? (
                     <Skeleton className="h-[300px] w-full rounded-lg" />
@@ -82,16 +76,18 @@ export default function Page() {
               </div>
             </section>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
-              <CommunityHighlightSection title="자유 게시판" posts={freeBoardPosts} />
-              <CommunityHighlightSection title="초보자 가이드" posts={beginnerGuidePosts} />
-            </div>
+            <section>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+                <CommunityHighlightSection title="자유 게시판" posts={freeBoardPosts} />
+                <CommunityHighlightSection title="초보자 가이드" posts={beginnerGuidePosts} />
+              </div>
+            </section>
           </main>
 
           <RightPanel />
 
         </div>
-      </div>
+      </div >
 
       <Footer />
     </>
