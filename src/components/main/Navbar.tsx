@@ -6,8 +6,10 @@ import { useSession, signOut } from "next-auth/react";
 import { Button } from "@/components/ui/button";
 import {
     HomeIcon, NewspaperIcon, UsersIcon,
-    CircleDollarSignIcon, CalendarIcon,
+    CircleDollarSignIcon, CalendarIcon, SearchIcon,
 } from "lucide-react";
+import { useState } from "react";
+import SearchOverlay from "@/components/SearchOverlay";
 
 const navItems = [
     { href: "/", label: "홈", icon: <HomeIcon className="w-5 h-5" /> },
@@ -20,6 +22,8 @@ const navItems = [
 export function Navbar() {
     const pathname = usePathname();
     const { data: session } = useSession();
+    const [searchOpen, setSearchOpen] = useState(false);
+    const recentSearches = ["리플", "비트코인", "에이다", "도지코인"];
 
     const isActive = (href: string) =>
         href === "/" ? pathname === href : pathname.startsWith(href);
@@ -47,6 +51,13 @@ export function Navbar() {
                 </div>
 
                 <div className="flex items-center gap-2">
+                    <button
+                        onClick={() => setSearchOpen(true)}
+                        className="text-gray-500 hover:text-blue-600 p-2"
+                    >
+                        <SearchIcon className="w-5 h-5" />
+                    </button>
+
                     {session && (
                         <Link href="/writing" className="hidden md:block">
                             <Button className="bg-blue-600 text-white rounded-md px-5 py-2 text-sm font-semibold hover:bg-blue-700 cursor-pointer">
@@ -54,9 +65,13 @@ export function Navbar() {
                             </Button>
                         </Link>
                     )}
+
                     {!session ? (
                         <Link href="/login">
-                            <Button variant="ghost" className="text-md font-bold text-gray-500 hover:text-blue-600 cursor-pointer">
+                            <Button
+                                variant="ghost"
+                                className="text-md font-bold text-gray-500 hover:text-blue-600 cursor-pointer"
+                            >
                                 로그인
                             </Button>
                         </Link>
@@ -85,6 +100,12 @@ export function Navbar() {
                     </Link>
                 ))}
             </nav>
+
+            <SearchOverlay
+                open={searchOpen}
+                onClose={() => setSearchOpen(false)}
+                recentSearches={recentSearches}
+            />
         </>
     );
 }
