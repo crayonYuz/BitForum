@@ -10,7 +10,7 @@ interface Props {
 }
 
 export default function SearchOverlay({ open, onClose, recentSearches }: Props) {
-    const overlayRef = useRef(null);
+    const overlayRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
         const handleKey = (e: KeyboardEvent) => {
@@ -22,7 +22,7 @@ export default function SearchOverlay({ open, onClose, recentSearches }: Props) 
 
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
-            if (overlayRef.current && !(overlayRef.current as any).contains(e.target)) {
+            if (overlayRef.current && !overlayRef.current.contains(e.target as Node)) {
                 onClose();
             }
         };
