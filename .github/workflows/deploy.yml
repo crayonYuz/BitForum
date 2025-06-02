@@ -31,7 +31,7 @@ jobs:
 
       - name: Build and Restart frontend with timing
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -o ServerAliveInterval=30 -o ServerAliveCountMax=10 -tt -i ~/.ssh/id_rsa ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             set -e
 
             export NVM_DIR="$HOME/.nvm"
@@ -51,12 +51,17 @@ jobs:
             fi
 
             echo "Building frontend..."
-            time pnpm build
+            time pnpm build > build.log 2>&1 || {
+              echo "❌ Build failed. Showing last 50 lines of build.log:"
+              tail -n 50 build.log
+              exit 1
+            }
 
             command -v pm2 >/dev/null 2>&1 || npm install -g pm2
 
             pm2 restart frontend || pm2 start "pnpm start" --name frontend
 
             echo "✅ Deployed successfully."
+            tail -n 50 build.log
             pm2 logs frontend --lines 50
           EOF
