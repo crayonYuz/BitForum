@@ -1,4 +1,4 @@
-name: Deploy to EC2
+name: Deploy Frontend to EC2
 
 on:
   push:
@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout code
+      - name: Checkout repository
         uses: actions/checkout@v3
 
       - name: Setup SSH
@@ -20,48 +20,55 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
 
-      - name: Sync code to EC2
+      - name: Sync project to EC2
         run: |
-          rsync -avz --exclude=node_modules --exclude=.next --exclude=.env.production \
-            -e "ssh -i ~/.ssh/id_rsa" ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/frontend
+          rsync -az --delete \
+            --exclude=node_modules \
+            --exclude=.next \
+            --exclude=.env.production \
+            -e "ssh -i ~/.ssh/id_rsa -o ServerAliveInterval=30 -o ServerAliveCountMax=10" \
+            ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/frontend
 
-      - name: Upload .env file
+      - name: Upload .env.production
         run: |
-          ssh -i ~/.ssh/id_rsa ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} "echo '${{ secrets.ENV_FILE }}' > ~/frontend/.env.production"
+          ssh -i ~/.ssh/id_rsa -o ServerAliveInterval=30 -o ServerAliveCountMax=10 ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
+            "echo '${{ secrets.ENV_FILE }}' > ~/frontend/.env.production"
 
-      - name: Build and Restart frontend with timing
+      - name: Build and restart frontend on EC2
         run: |
-          ssh -o ServerAliveInterval=30 -o ServerAliveCountMax=10 -tt -i ~/.ssh/id_rsa ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
+          ssh -tt -i ~/.ssh/id_rsa -o ServerAliveInterval=30 -o ServerAliveCountMax=10 ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
             set -e
+            cd ~/frontend
 
+            # Load Node.js
             export NVM_DIR="$HOME/.nvm"
             [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
             nvm install 18
             nvm use 18
 
-            export PATH=$PATH:/home/ubuntu/.local/share/pnpm
-            cd ~/frontend
+            export PATH=$PATH:$HOME/.local/share/pnpm
 
-            echo "Installing dependencies..."
+            echo "🔧 Cleaning old build and reinstalling dependencies..."
+            rm -rf node_modules .next
             time pnpm install
 
             if [ -f prisma/schema.prisma ]; then
-              echo "Generating Prisma client..."
+              echo "🧬 Generating Prisma client..."
               pnpm prisma generate
             fi
 
-            echo "Building frontend..."
+            echo "🏗️ Building frontend..."
             time pnpm build > build.log 2>&1 || {
-              echo "❌ Build failed. Showing last 50 lines of build.log:"
+              echo "❌ Build failed. Last 50 lines of build.log:"
               tail -n 50 build.log
               exit 1
             }
 
+            echo "🚀 Restarting frontend with PM2..."
             command -v pm2 >/dev/null 2>&1 || npm install -g pm2
-
             pm2 restart frontend || pm2 start "pnpm start" --name frontend
 
-            echo "✅ Deployed successfully."
-            tail -n 50 build.log
-            pm2 logs frontend --lines 50
+            echo "✅ Deployment complete. Logs:"
+            tail -n 20 build.log
+            pm2 logs frontend --lines 20
           EOF
