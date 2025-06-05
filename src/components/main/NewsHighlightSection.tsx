@@ -6,10 +6,9 @@ import { Card, CardContent } from "@/components/ui/card"
 interface Props {
     posts: { id: number; title: { rendered: string } }[]
     title: string
-    type: 'us-stock' | 'coin'
 }
 
-export function NewsHighlightSection({ posts, title, type }: Props) {
+export function NewsHighlightSection({ posts, title }: Props) {
     const router = useRouter()
 
     return (
@@ -26,7 +25,7 @@ export function NewsHighlightSection({ posts, title, type }: Props) {
                         .map((post, index) => (
                             <div
                                 key={post.id}
-                                onClick={() => router.push(`/news/${type}/${post.id}`)}
+                                onClick={() => router.push(`/news/${post.id}`)}
                                 className="flex items-start gap-2 hover:bg-muted px-2 py-1 rounded-md cursor-pointer transition"
                             >
                                 <span className="text-blue-600 font-bold text-sm">{index + 1}.</span>
