@@ -1,4 +1,4 @@
-name: Deploy Frontend to EC2
+name: Deploy Next.js to EC2
 
 on:
   push:
@@ -13,62 +13,17 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Setup SSH
+      - name: Setup SSH Agent
+        uses: webfactory/ssh-agent@v0.8.1
+        with:
+          ssh-private-key: ${{ secrets.EC2_SSH_PRIVATE_KEY }}
+
+      - name: Deploy to EC2
         run: |
-          mkdir -p ~/.ssh
-          echo "${{ secrets.EC2_KEY }}" > ~/.ssh/id_rsa
-          chmod 600 ~/.ssh/id_rsa
-          ssh-keyscan -H ${{ secrets.EC2_HOST }} >> ~/.ssh/known_hosts
-
-      - name: Sync project to EC2
-        run: |
-          rsync -az --delete \
-            --exclude=node_modules \
-            --exclude=.next \
-            --exclude=.env.production \
-            -e "ssh -i ~/.ssh/id_rsa -o ServerAliveInterval=30 -o ServerAliveCountMax=10" \
-            ./ ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }}:~/frontend
-
-      - name: Upload .env.production
-        run: |
-          ssh -i ~/.ssh/id_rsa -o ServerAliveInterval=30 -o ServerAliveCountMax=10 ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} \
-            "echo '${{ secrets.ENV_FILE }}' > ~/frontend/.env.production"
-
-      - name: Build and restart frontend on EC2
-        run: |
-          ssh -tt -i ~/.ssh/id_rsa -o ServerAliveInterval=30 -o ServerAliveCountMax=10 ${{ secrets.EC2_USER }}@${{ secrets.EC2_HOST }} << 'EOF'
-            set -e
-            cd ~/frontend
-
-            # Load Node.js
-            export NVM_DIR="$HOME/.nvm"
-            [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-            nvm install 18
-            nvm use 18
-
-            export PATH=$PATH:$HOME/.local/share/pnpm
-
-            echo "🔧 Cleaning old build and reinstalling dependencies..."
-            rm -rf node_modules .next
-            time pnpm install
-
-            if [ -f prisma/schema.prisma ]; then
-              echo "🧬 Generating Prisma client..."
-              pnpm prisma generate
-            fi
-
-            echo "🏗️ Building frontend..."
-            time pnpm build > build.log 2>&1 || {
-              echo "❌ Build failed. Last 50 lines of build.log:"
-              tail -n 50 build.log
-              exit 1
-            }
-
-            echo "🚀 Restarting frontend with PM2..."
-            command -v pm2 >/dev/null 2>&1 || npm install -g pm2
-            pm2 restart frontend || pm2 start "pnpm start" --name frontend
-
-            echo "✅ Deployment complete. Logs:"
-            tail -n 20 build.log
-            pm2 logs frontend --lines 20
+          ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
+            cd ~/CoinGekco-Test
+            git pull origin main
+            pnpm install
+            pnpm build
+            pm2 restart bitforum || pm2 start pnpm --name bitforum -- start
           EOF
