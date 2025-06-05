@@ -12,5 +12,5 @@ export function UsStockNewsSection() {
 
     if (isLoading) return <InfoCardSkeleton />;
 
-    return <NewsHighlightSection title="미국 증시 뉴스" posts={data?.slice(0, 5) || []} type={'us-stock'} />;
+    return <NewsHighlightSection title="미국 증시 뉴스" posts={data?.slice(0, 5) || []} />;
 }

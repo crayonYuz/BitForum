@@ -11,5 +11,5 @@ export function CoinNewsSection() {
 
     if (isLoading) return <InfoCardSkeleton />;
 
-    return <NewsHighlightSection title="코인 뉴스" posts={data?.slice(0, 5) || []} type={'coin'} />;
+    return <NewsHighlightSection title="코인 뉴스" posts={data?.slice(0, 5) || []} />;
 }
