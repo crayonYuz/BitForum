@@ -40,6 +40,6 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-# prisma
-lib/prisma.ts
-prisma/
+# # prisma
+# lib/prisma.ts
+# prisma/
