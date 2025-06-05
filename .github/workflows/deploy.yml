@@ -21,9 +21,9 @@ jobs:
       - name: Deploy to EC2
         run: |
           ssh -o StrictHostKeyChecking=no ubuntu@${{ secrets.EC2_HOST }} << 'EOF'
-            cd ~/CoinGekco-Test
+            cd ~/Bitforum
             git pull origin main
             pnpm install
             pnpm build
-            pm2 restart bitforum || pm2 start pnpm --name bitforum -- start
+            pm2 restart bitforum-frontend || pm2 start "pnpm start" --name bitforum-frontend
           EOF
