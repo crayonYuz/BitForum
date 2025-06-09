@@ -3,17 +3,15 @@
 import { Suspense, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { getCoinNews, CoinNews } from '@/lib/api/news/getCoinNews';
+import { getUSStockNews } from '@/lib/api/news/getUSStockNews';
 
 import { Navbar } from "@/components/main/Navbar";
 import { FearGreedGauge } from "@/components/news/FearGreedGauge";
-import { NewsSourceList } from "@/components/news/NewsSourceList";
-import { RisingTopicsSection } from "@/components/news/RisingTopicsSection";
-import { FallingTopicsSection } from "@/components/news/FallingTopicsSection";
 import { AffiliateBanner } from "@/components/affiliate/AffiliateBanner";
 import { CustomTabs } from '@/components/community/CustomTabs';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { NewsTabContent } from '@/components/news/NewsTabContent';
-import { getUSStockNews } from '@/lib/api/news/getUSStockNews';
+import { TopicSection } from '@/components/news/TopicSection';
 
 function NewsPage() {
     const searchParams = useSearchParams();
@@ -30,7 +28,6 @@ function NewsPage() {
         queryKey: ['usStockNews'],
         queryFn: getUSStockNews,
     });
-
 
     useEffect(() => {
         const initialTab = searchParams.get("tab");
@@ -55,7 +52,7 @@ function NewsPage() {
                         selectedTab={selectedTab}
                         onTabChange={(tab) => {
                             setSelectedTab(tab);
-                            router.replace(`/news?tab=${encodeURIComponent(tab)}`)
+                            router.replace(`/news?tab=${encodeURIComponent(tab)}`);
                         }}
                     />
 
@@ -68,14 +65,12 @@ function NewsPage() {
                         usLoading={usLoading}
                         usError={usError}
                     />
-
                 </div>
 
                 <aside className="hidden lg:block lg:w-1/4 space-y-6">
                     <FearGreedGauge />
-                    <RisingTopicsSection title="상승 관점" />
-                    <FallingTopicsSection title="하락 관점" />
-                    <NewsSourceList title="뉴스출처 바로가기" />
+                    <TopicSection title="코인 주요 이슈" news={news} />
+                    <TopicSection title="미국 증시 이슈" news={usStockNews} />
                 </aside>
             </div>
         </div>

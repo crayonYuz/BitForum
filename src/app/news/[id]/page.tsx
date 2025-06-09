@@ -2,13 +2,13 @@
 
 import { useParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { getCoinNewsById } from '@/lib/api/news/getCoinNews';
+import { getCoinNews, getCoinNewsById } from '@/lib/api/news/getCoinNews';
+import { getUSStockNews } from '@/lib/api/news/getUSStockNews';
+
 import { Navbar } from '@/components/main/Navbar';
 import { Card, CardContent } from '@/components/ui/card';
 import { FearGreedGauge } from '@/components/news/FearGreedGauge';
-import { RisingTopicsSection } from '@/components/news/RisingTopicsSection';
-import { FallingTopicsSection } from '@/components/news/FallingTopicsSection';
-import { NewsSourceList } from '@/components/news/NewsSourceList';
+import { TopicSection } from '@/components/news/TopicSection';
 import { decodeHtmlEntities } from '@/utils/markdown';
 
 export default function Page() {
@@ -19,6 +19,16 @@ export default function Page() {
         queryKey: ['coinNews', id],
         queryFn: () => getCoinNewsById(id),
         enabled: !!id,
+    });
+
+    const { data: coinNews = [] } = useQuery({
+        queryKey: ['coinNewsList'],
+        queryFn: getCoinNews,
+    });
+
+    const { data: usStockNews = [] } = useQuery({
+        queryKey: ['usStockNewsList'],
+        queryFn: getUSStockNews,
     });
 
     if (isLoading) return <div className="p-6">뉴스를 불러오는 중...</div>;
@@ -33,7 +43,9 @@ export default function Page() {
                         <CardContent className="space-y-4 mb-10">
                             <div>
                                 <div className="text-sm text-gray-400">실시간 코인 뉴스</div>
-                                <h1 className="text-2xl font-bold mt-2">{decodeHtmlEntities(news.title.rendered)}</h1>
+                                <h1 className="text-2xl font-bold mt-2">
+                                    {decodeHtmlEntities(news.title.rendered)}
+                                </h1>
                                 <div className="text-sm text-gray-500 mt-1">
                                     {new Date(news.date).toLocaleDateString()}
                                 </div>
@@ -49,9 +61,8 @@ export default function Page() {
 
                 <aside className="hidden lg:block lg:w-1/4 space-y-6">
                     <FearGreedGauge />
-                    <RisingTopicsSection title="상승 관점" />
-                    <FallingTopicsSection title="하락 관점" />
-                    <NewsSourceList title="뉴스출처 바로가기" />
+                    <TopicSection title="코인 주요 이슈" news={coinNews} />
+                    <TopicSection title="미국 증시 이슈" news={usStockNews} />
                 </aside>
             </div>
         </div>
