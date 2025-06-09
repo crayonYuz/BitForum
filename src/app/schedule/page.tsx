@@ -5,10 +5,20 @@ import { ScheduleItem } from "@/components/schedule/ScheduleItem";
 import { Navbar } from "@/components/main/Navbar";
 import { scheduleData } from "@/lib/scheduleData";
 import { ScheduleTabs } from "@/components/schedule/ScheduleTabs";
+import ScheduleModal from "@/components/schedule/ScheduleModal";
+import { useRouter } from "next/navigation";
 
 export default function Page() {
     const [selectedTab, setSelectedTab] = useState("전체");
+    const [showModal, setShowModal] = useState(true);
+    const router = useRouter();
+
     const tabs = ["전체", "경제", "암호화폐", "거래소"];
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        router.back();
+    };
 
     const filteredSchedule = selectedTab === "전체"
         ? scheduleData
@@ -17,6 +27,9 @@ export default function Page() {
     return (
         <div className="bg-white min-h-screen text-gray-900">
             <Navbar />
+
+            {showModal && <ScheduleModal onClose={handleCloseModal} />}
+
 
             <div className="max-w-screen-lg mx-auto px-4 pt-14">
                 <div className="pt-8">
