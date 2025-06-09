@@ -15,7 +15,7 @@ export default function ScheduleModal({ onClose }: { onClose: () => void }) {
                 <p className="text-gray-600 mb-6">해당 기능은 현재 준비 중입니다.</p>
                 <button
                     onClick={onClose}
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
+                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 cursor-pointer"
                 >
                     돌아가기
                 </button>
