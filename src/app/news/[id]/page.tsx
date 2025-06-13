@@ -9,7 +9,7 @@ import { Navbar } from '@/components/main/Navbar';
 import { Card, CardContent } from '@/components/ui/card';
 import { FearGreedGauge } from '@/components/news/FearGreedGauge';
 import { TopicSection } from '@/components/news/TopicSection';
-import { decodeHtmlEntities } from '@/utils/markdown';
+import { decodeHtmlEntities, formatParagraphs } from '@/utils/markdown';
 
 export default function Page() {
     const params = useParams();
@@ -50,10 +50,11 @@ export default function Page() {
                                     {new Date(news.date).toLocaleDateString()}
                                 </div>
                             </div>
-
                             <div
-                                className="prose prose-sm max-w-none text-gray-900 min-h-[200px]"
-                                dangerouslySetInnerHTML={{ __html: decodeHtmlEntities(news.content.rendered) }}
+                                className="prose prose-sm max-w-none text-gray-900 min-h-[200px] space-y-4 leading-relaxed"
+                                dangerouslySetInnerHTML={{
+                                    __html: formatParagraphs(decodeHtmlEntities(news.content.rendered)),
+                                }}
                             />
                         </CardContent>
                     </Card>

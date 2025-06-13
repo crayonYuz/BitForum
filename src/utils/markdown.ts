@@ -19,3 +19,10 @@ export function decodeHtmlEntities(text: string): string {
   textarea.innerHTML = text
   return textarea.value
 }
+
+export function formatParagraphs(text: string): string {
+  return text
+    .split(/\n{2,}/g)
+    .map((para) => `<p>${para.trim().replace(/\n/g, '<br />')}</p>`)
+    .join('')
+}
