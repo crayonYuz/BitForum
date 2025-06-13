@@ -4,7 +4,11 @@ import { Card, CardTitle } from '@/components/ui/card';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 
-export function NoticeBanner() {
+type NoticeBannerProps = {
+  notices: string[];
+};
+
+export function NoticeBanner({ notices }: NoticeBannerProps) {
   return (
     <Card className="p-4 text-sm relative">
       <div className="flex justify-between items-center font-semibold mb-2">
@@ -16,11 +20,16 @@ export function NoticeBanner() {
           <ChevronRight size={16} />
         </Link>
       </div>
-      <ul className="list-disc pl-4 space-y-1">
-        <li>레퍼럴 가입 시 수수료 할인!</li>
-        <li>거래소 이벤트: 5월 한정 에어드랍 진행 중</li>
-        <li>비트포럼 자체 커뮤니티 이벤트 진행 예정</li>
-      </ul>
+
+      {notices.length > 0 ? (
+        <ul className="list-disc pl-4 space-y-1">
+          {notices.map((notice, idx) => (
+            <li key={idx}>{notice}</li>
+          ))}
+        </ul>
+      ) : (
+        <p className="text-gray-500 text-sm pl-1">아직 등록된 공지가 없습니다.</p>
+      )}
     </Card>
   );
 }
