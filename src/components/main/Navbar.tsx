@@ -23,7 +23,6 @@ export function Navbar() {
     const pathname = usePathname();
     const { data: session } = useSession();
     const [searchOpen, setSearchOpen] = useState(false);
-    const recentSearches = ["리플", "비트코인", "에이다", "도지코인"];
 
     const isActive = (href: string) =>
         href === "/" ? pathname === href : pathname.startsWith(href);
@@ -104,7 +103,6 @@ export function Navbar() {
             <SearchOverlay
                 open={searchOpen}
                 onClose={() => setSearchOpen(false)}
-                recentSearches={recentSearches}
             />
         </>
     );
