@@ -28,10 +28,9 @@ export const CommunityItem = ({ posts }: { posts: Post[] }) => {
                             </div>
                             {imageUrl && (
                                 <div className="w-24 h-24 relative shrink-0">
-                                    <Image
+                                    <img
                                         src={imageUrl}
                                         alt="썸네일"
-                                        fill
                                         className="object-cover rounded"
                                     />
                                 </div>

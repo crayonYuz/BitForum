@@ -50,10 +50,9 @@ export function ForumNewsCards() {
                         <div className="p-2">
                             <div className="w-full overflow-hidden rounded-md shadow-sm">
                                 <div className="relative w-full h-40 cursor-pointer">
-                                    <Image
+                                    <img
                                         src={article.image}
                                         alt={article.title}
-                                        fill
                                         className="object-cover"
                                     />
                                 </div>

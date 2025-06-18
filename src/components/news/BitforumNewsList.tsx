@@ -60,10 +60,9 @@ export function BitforumNewsList() {
                 className="flex-1 bg-white rounded-2xl overflow-hidden shadow hover:shadow-md transition group"
             >
                 <div className="relative w-full h-50">
-                    <Image
+                    <img
                         src={main.thumbnail}
                         alt={main.title}
-                        fill
                         className="object-cover group-hover:scale-105 transition-transform"
                     />
                 </div>
