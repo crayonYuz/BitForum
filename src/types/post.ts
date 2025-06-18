@@ -2,14 +2,10 @@ export interface Category {
   id: number
   name: string
 }
-
-export interface Post {
+export type Post = {
   id: number
   title: string
   content: string
   author: string
-  createdAt: string
-  category: Category
-  viewCount?: number
-  commentCount?: number
+  date: string
 }

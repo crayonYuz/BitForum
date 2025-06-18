@@ -29,10 +29,10 @@ export function Navbar() {
 
     return (
         <>
-            <header className="flex w-full h-14 border-b bg-white text-black px-4 py-2 items-center justify-between fixed top-0 left-0 right-0 z-50">
+            <header className="flex w-full h-18 bg-white text-black px-4 py-2 items-center justify-between fixed top-0 left-0 right-0 z-50">
                 <div className="flex items-center gap-6">
                     <Link href="/">
-                        <img src="/bitforum.svg" alt="비트포럼 로고" width={130} />
+                        <img src="/bitforum.svg" alt="비트포럼 로고" width={150} />
                     </Link>
                     <nav className="hidden md:flex gap-4">
                         {navItems.map(({ href, label }) => (
