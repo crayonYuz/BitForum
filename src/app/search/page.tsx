@@ -8,7 +8,7 @@ import { getSearchResults } from '@/lib/api/search/getSearchResults'
 import { getCoinNews } from '@/lib/api/news/getCoinNews'
 import { getUSStockNews } from '@/lib/api/news/getUSStockNews'
 
-import { Post } from '@/types/post'
+import { Post, SearchItem } from '@/types/post'
 import { Navbar } from '@/components/main/Navbar'
 
 const TABS = [
@@ -66,8 +66,8 @@ function SearchPage() {
         router.push(`/search?q=${encodeURIComponent(searchTerm)}&board=${tab}`)
     }
 
-    const handleItemClick = (item: any) => {
-        if ('title' in item && 'rendered' in item.title) {
+    const handleItemClick = (item: SearchItem) => {
+        if ('link' in item) {
             router.push(item.link)
         } else {
             router.push(`/community/${item.id}`)
@@ -116,17 +116,21 @@ function SearchPage() {
                     <p className="text-gray-500">검색 결과가 없어요</p>
                 ) : (
                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {results.map((item: any) => (
+                        {(results as SearchItem[]).map((item) => (
                             <li
                                 key={item.id}
                                 onClick={() => handleItemClick(item)}
                                 className="border p-4 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer"
                             >
                                 <h2 className="font-bold text-lg">
-                                    {'title' in item ? item.title.rendered : item.title}
+                                    {'title' in item ? (typeof item.title === 'string' ? item.title : item.title.rendered) : ''}
                                 </h2>
                                 <p className="text-sm text-gray-600 line-clamp-2">
-                                    {'content' in item ? item.content.rendered.replace(/<[^>]+>/g, '') : item.content}
+                                    {'content' in item
+                                        ? typeof item.content === 'string'
+                                            ? item.content
+                                            : item.content.rendered.replace(/<[^>]+>/g, '')
+                                        : ''}
                                 </p>
                                 <p className="text-xs text-gray-400 mt-2">
                                     {'author' in item
