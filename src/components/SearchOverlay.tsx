@@ -50,7 +50,6 @@ export default function SearchOverlay({ open, onClose }: Props) {
         setRecentSearches(updated);
         localStorage.setItem('recentSearches', JSON.stringify(updated));
 
-        // 검색 결과 페이지 이동
         router.push(`/search?q=${encodeURIComponent(trimmed)}`);
         onClose();
     };

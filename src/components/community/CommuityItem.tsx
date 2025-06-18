@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { Post } from "@/lib/api/post/getPosts";
 import { categoryMap, getTimeAgo } from "@/utils/dataUtils";
 import { extractFirstImageUrl, stripMarkdown } from '@/utils/markdown';

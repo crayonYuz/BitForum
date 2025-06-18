@@ -3,7 +3,6 @@
 import { CoinNews } from '@/lib/api/news/getCoinNews'
 import Link from 'next/link'
 import { extractFirstImageUrl, stripHtmlTags, decodeHtmlEntities } from '@/utils/markdown'
-import Image from 'next/image'
 
 export const CoinNewsList = ({ news }: { news: CoinNews[] }) => {
     return (
