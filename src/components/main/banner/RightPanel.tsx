@@ -10,6 +10,11 @@ export function RightPanel() {
       <NoticeBanner notices={[]} />
       <RightContactPanel />
       <CoinInfoList />
+      <iframe
+        src="https://kr.widgets.investing.com/live-currency-cross-rates?theme=lightTheme&hideTitle=true&roundedCorners=true&pairs=9511,158,159,650"
+        width="100%"
+        height="300"
+      />
     </aside>
   );
 }

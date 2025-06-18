@@ -3,7 +3,6 @@
 import { CoinNews } from '@/lib/api/news/getCoinNews'
 import Link from 'next/link'
 import { extractFirstImageUrl, stripHtmlTags, decodeHtmlEntities } from '@/utils/markdown'
-import Image from 'next/image'
 
 export const CoinNewsList = ({ news }: { news: CoinNews[] }) => {
     return (
@@ -27,10 +26,9 @@ export const CoinNewsList = ({ news }: { news: CoinNews[] }) => {
                             </div>
                             {imageUrl && (
                                 <div className="w-24 h-24 relative shrink-0">
-                                    <Image
+                                    <img
                                         src={imageUrl}
                                         alt="썸네일"
-                                        fill
                                         className="object-cover rounded"
                                     />
                                 </div>

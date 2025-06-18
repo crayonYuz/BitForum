@@ -1,5 +1,4 @@
 import Link from 'next/link';
-import Image from 'next/image';
 import { Post } from "@/lib/api/post/getPosts";
 import { categoryMap, getTimeAgo } from "@/utils/dataUtils";
 import { extractFirstImageUrl, stripMarkdown } from '@/utils/markdown';
@@ -28,10 +27,9 @@ export const CommunityItem = ({ posts }: { posts: Post[] }) => {
                             </div>
                             {imageUrl && (
                                 <div className="w-24 h-24 relative shrink-0">
-                                    <Image
+                                    <img
                                         src={imageUrl}
                                         alt="썸네일"
-                                        fill
                                         className="object-cover rounded"
                                     />
                                 </div>
