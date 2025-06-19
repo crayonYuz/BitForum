@@ -73,7 +73,7 @@ export default function Page() {
                                         <MoreHorizontal />
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
-                                        {isAuthor && (
+                                        {(isAuthor || isAdmin) && (
                                             <DropdownMenuItem onClick={handleEdit}>수정하기</DropdownMenuItem>
                                         )}
                                         <DropdownMenuItem onClick={handleDelete} className="text-red-500">삭제하기</DropdownMenuItem>
@@ -90,9 +90,10 @@ export default function Page() {
                             </div>
 
                             <div
-                                className="prose prose-sm max-w-none text-gray-900 min-h-[200px]"
+                                className="prose prose-lg max-w-none text-gray-900 dark:prose-invert prose-headings:font-bold prose-a:text-blue-600 prose-img:rounded-lg min-h-[200px]"
                                 dangerouslySetInnerHTML={{ __html: marked.parse(post.content) }}
                             />
+
                         </CardContent>
 
                         <CardContent className="space-y-3">

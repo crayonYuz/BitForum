@@ -115,6 +115,20 @@ export default function Page() {
                         height="550px"
                         initialEditType="markdown"
                         useCommandShortcut={true}
+                        hooks={{
+                            addImageBlobHook: (blob: File, callback: (url: string, altText?: string) => void) => {
+                                if (blob.size > 2 * 1024 * 1024) {
+                                    toast.error('이미지 크기는 최대 2MB까지 허용됩니다.');
+                                    return;
+                                }
+
+                                const reader = new FileReader();
+                                reader.onloadend = () => {
+                                    callback(reader.result as string, blob.name);
+                                };
+                                reader.readAsDataURL(blob);
+                            },
+                        }}
                     />
                 </div>
 
