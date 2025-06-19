@@ -55,7 +55,7 @@ export default function Page() {
 
 
             <section>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-10 mt-14">
                 <UsStockNewsSection />
                 <CoinNewsSection />
               </div>
