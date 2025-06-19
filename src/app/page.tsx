@@ -49,7 +49,7 @@ export default function Page() {
             {isLoading ? <Skeleton className="h-16 w-full rounded-lg" /> : <CoinTickerWidget />}
 
             <section>
-              <SectionTitle title="비트포럼 뉴스" />
+              <SectionTitle title="비트포럼 뉴스" subtitle="비트포럼이 직접 선별한 주요 뉴스" />
               {isLoading ? <ForumNewsCardsSkeleton /> : <ForumNewsCards />}
             </section>
 
