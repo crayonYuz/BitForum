@@ -33,7 +33,7 @@ export function CoinInfoList() {
   const currentCoins = filteredData.slice(startIdx, endIdx);
 
   return (
-    <Card className="p-4 w-full mt-8">
+    <Card className="p-4 w-full mt-10 mb-10">
       <h2 className="font-semibold text-base mb-4">코인 정보</h2>
       <div className="relative mb-4">
         <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
