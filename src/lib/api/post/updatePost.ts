@@ -2,7 +2,7 @@ import axios from 'axios'
 
 export interface UpdatePostData {
   title: string
-  category: 'free' | 'coin-info' | 'beginner-guide'
+  category: 'free' | 'coin-info' | 'exchange-info' | 'beginner-guide' | 'notice'
   content: string
   author: string
 }

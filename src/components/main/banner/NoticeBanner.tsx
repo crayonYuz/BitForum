@@ -1,14 +1,22 @@
 'use client';
 
+import { useQuery } from '@tanstack/react-query';
+import Link from 'next/link';
+import { getPosts, Post } from '@/lib/api/post/getPosts';
 import { Card, CardTitle } from '@/components/ui/card';
 import { ChevronRight } from 'lucide-react';
-import Link from 'next/link';
 
-type NoticeBannerProps = {
-  notices: string[];
-};
+export function NoticeBanner() {
+  const { data: posts = [] } = useQuery<Post[]>({
+    queryKey: ['posts'],
+    queryFn: getPosts,
+  });
 
-export function NoticeBanner({ notices }: NoticeBannerProps) {
+  const noticePosts = posts
+    .filter(post => post.category === 'notice')
+    .sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime())
+    .slice(0, 3);
+
   return (
     <Card className="p-4 text-sm relative">
       <div className="flex justify-between items-center font-semibold mb-2">
@@ -21,10 +29,17 @@ export function NoticeBanner({ notices }: NoticeBannerProps) {
         </Link>
       </div>
 
-      {notices.length > 0 ? (
+      {noticePosts.length > 0 ? (
         <ul className="list-disc pl-4 space-y-1">
-          {notices.map((notice, idx) => (
-            <li key={idx}>{notice}</li>
+          {noticePosts.map((notice) => (
+            <li key={notice.id}>
+              <Link
+                href={`/community/${notice.id}`}
+                className="hover:underline hover:text-black"
+              >
+                {notice.title}
+              </Link>
+            </li>
           ))}
         </ul>
       ) : (
