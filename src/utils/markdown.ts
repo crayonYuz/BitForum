@@ -6,6 +6,7 @@ export function extractFirstImageUrl(markdown: string): string | null {
 export function stripMarkdown(markdown: string): string {
   return markdown
     .replace(/!\[.*?\]\(.*?\)/g, '')
+    .replace(/#{1,6}\s*(.*)/g, '$1')
     .replace(/\*\*(.*?)\*\*/g, '$1')
     .replace(/\*(.*?)\*/g, '$1')
 }
