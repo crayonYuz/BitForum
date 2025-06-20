@@ -7,7 +7,7 @@ import { RightPanel } from '../components/main/banner/RightPanel';
 import { SectionTitle } from '@/components/news/SectionTitle';
 import { ForumNewsCards } from '@/components/main/ForumNewsCard';
 import { AffiliateProgram } from '@/components/affiliate/AffiliateProgram';
-import { ForumNewsCardsSkeleton } from '@/components/main/ForumNewsCardsSkeleton';
+import { ForumNewsCardsSkeleton } from '@/components/skeleton/ForumNewsCardsSkeleton';
 import { Skeleton } from '@/components/ui/skeleton';
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
