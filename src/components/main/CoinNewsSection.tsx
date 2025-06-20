@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getCoinNews, CoinNews } from '@/lib/api/news/getCoinNews';
 import { NewsHighlightSection } from './NewsHighlightSection';
-import { InfoCardSkeleton } from './InfoCardSkeleton';
+import { InfoCardSkeleton } from '../skeleton/InfoCardSkeleton';
 
 export function CoinNewsSection() {
     const { data, isLoading } = useQuery<CoinNews[]>({
