@@ -13,9 +13,14 @@ import { deletePost } from '@/lib/api/post/deletePost';
 import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem } from '@/components/ui/dropdown-menu';
 import { MoreHorizontal } from 'lucide-react';
 import { useSession } from 'next-auth/react';
-import { toast } from "sonner"
+import { toast } from 'sonner';
 import { CommentSection } from '@/components/community/CommentSection';
-import { marked } from 'marked';
+import dynamic from 'next/dynamic';
+
+const Viewer = dynamic(() => import('@toast-ui/react-editor').then(mod => mod.Viewer), {
+    ssr: false,
+});
+import '@toast-ui/editor/dist/toastui-editor-viewer.css';
 
 export default function Page() {
     const params = useParams();
@@ -73,9 +78,7 @@ export default function Page() {
                                         <MoreHorizontal />
                                     </DropdownMenuTrigger>
                                     <DropdownMenuContent align="end">
-                                        {(isAuthor || isAdmin) && (
-                                            <DropdownMenuItem onClick={handleEdit}>수정하기</DropdownMenuItem>
-                                        )}
+                                        <DropdownMenuItem onClick={handleEdit}>수정하기</DropdownMenuItem>
                                         <DropdownMenuItem onClick={handleDelete} className="text-red-500">삭제하기</DropdownMenuItem>
                                     </DropdownMenuContent>
                                 </DropdownMenu>
@@ -89,11 +92,10 @@ export default function Page() {
                                 </div>
                             </div>
 
-                            <div
-                                className="prose prose-lg max-w-none text-gray-900 dark:prose-invert prose-headings:font-bold prose-a:text-blue-600 prose-img:rounded-lg min-h-[200px]"
-                                dangerouslySetInnerHTML={{ __html: marked.parse(post.content) }}
-                            />
-
+                            {/* ✅ Toast UI Viewer로 마크다운 콘텐츠 렌더링 */}
+                            <div className="min-h-[200px]">
+                                <Viewer initialValue={post.content} />
+                            </div>
                         </CardContent>
 
                         <CardContent className="space-y-3">
