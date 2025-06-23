@@ -43,7 +43,7 @@ function NewsPage() {
         <div className="bg-white min-h-screen text-gray-900 pt-6">
             <Navbar />
 
-            <div className="max-w-7xl mx-auto px-4 pt-14 pb-20 lg:flex lg:gap-6 justify-center">
+            <div className="max-w-7xl mx-auto px-4 pt-14 pb-20 lg:flex lg:gap-10 justify-center">
                 <div className="lg:w-2/3 space-y-6">
                     <AffiliateBanner />
 

@@ -1,6 +1,11 @@
-export function extractFirstImageUrl(markdown: string): string | null {
-  const match = markdown.match(/!\[.*?\]\((.*?)\)/)
-  return match ? match[1] : null
+export function extractFirstImageUrl(content: string): string | null {
+  const htmlMatch = content.match(/<img[^>]+src="([^">]+)"/i)
+  if (htmlMatch) return htmlMatch[1]
+
+  const markdownMatch = content.match(/!\[.*?\]\((.*?)\)/)
+  if (markdownMatch) return markdownMatch[1]
+
+  return null
 }
 
 export function stripMarkdown(markdown: string): string {

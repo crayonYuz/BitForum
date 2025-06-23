@@ -14,7 +14,7 @@ export const USStockNewsList = ({ news }: { news: CoinNews[] }) => {
 
                 return (
                     <Link key={item.id} href={`/news/${item.id}`}>
-                        <div className="flex border-b pb-4 cursor-pointer hover:bg-gray-50 transition-all p-2 rounded gap-4">
+                        <div className="flex border-b pb-4 cursor-pointer hover:bg-gray-50 transition-all p-3 rounded gap-4 min-h-[130px]">
                             <div className="flex-1">
                                 <div className="text-xs text-muted-foreground">
                                     {new Date(item.date).toLocaleDateString()}
