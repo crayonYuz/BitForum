@@ -4,7 +4,7 @@ import { CoinNews } from '@/lib/api/news/getCoinNews';
 import { SectionTitle } from '@/components/news/SectionTitle';
 import { BitforumNewsList } from '@/components/news/BitforumNewsList';
 import { CoinNewsList } from '@/components/news/CoinNewsList';
-import { NewsSkeleton } from '@/components/news/NewsSkeleton';
+import { NewsSkeleton } from '@/components/skeleton/NewsSkeleton';
 import { USStockNewsList } from '@/components/news/USStockNewsList';
 
 type Props = {
@@ -31,7 +31,13 @@ export const NewsTabContent = ({
             return (
                 <div className="space-y-4">
                     <SectionTitle title="비트포럼 뉴스" />
-                    <BitforumNewsList />
+                    {isLoading ? (
+                        <NewsSkeleton />
+                    ) : isError ? (
+                        <p className='text-red-500'>뉴스를 불러오지 못했습니다.</p>
+                    ) : (
+                        <BitforumNewsList />
+                    )}
                 </div>
             );
 
