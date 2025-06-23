@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { getUSStockNews } from '@/lib/api/news/getUSStockNews';
 import { NewsHighlightSection } from './NewsHighlightSection';
-import { InfoCardSkeleton } from './InfoCardSkeleton';
+import { InfoCardSkeleton } from '../skeleton/InfoCardSkeleton';
 import { CoinNews } from '@/lib/api/news/getCoinNews';
 
 export function UsStockNewsSection() {
