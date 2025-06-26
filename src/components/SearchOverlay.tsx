@@ -72,7 +72,7 @@ export default function SearchOverlay({ open, onClose }: Props) {
         <div className="fixed inset-0 z-50 bg-black/30">
             <div className="fixed top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl p-4 z-50">
                 <div className="flex items-center bg-white rounded-full px-4 py-3 shadow-lg border">
-                    <SearchIcon className="w-5 h-5 text-gray-500 mr-2" />
+                    <SearchIcon className="w-5 h-5 text-gray-500 mr-2 " />
                     <input
                         type="text"
                         ref={inputRef}

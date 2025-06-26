@@ -2,6 +2,7 @@
 
 import { useRouter } from "next/navigation"
 import { Card, CardContent } from "@/components/ui/card"
+import { decodeHtmlEntities } from "@/utils/markdown";
 
 interface Props {
     posts: { id: number; title: { rendered: string } }[]
@@ -30,7 +31,7 @@ export function NewsHighlightSection({ posts, title }: Props) {
                             >
                                 <span className="text-blue-600 font-bold text-sm">{index + 1}.</span>
                                 <span className="font-medium text-sm text-gray-800 line-clamp-1">
-                                    {post.title.rendered}
+                                    {decodeHtmlEntities(post.title.rendered)}
                                 </span>
                             </div>
                         ))}

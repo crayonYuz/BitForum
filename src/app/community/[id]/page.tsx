@@ -92,7 +92,6 @@ export default function Page() {
                                 </div>
                             </div>
 
-                            {/* ✅ Toast UI Viewer로 마크다운 콘텐츠 렌더링 */}
                             <div className="min-h-[200px]">
                                 <Viewer initialValue={post.content} />
                             </div>
