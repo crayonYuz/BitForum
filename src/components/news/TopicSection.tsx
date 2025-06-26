@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { Card, CardContent, CardTitle } from "@/components/ui/card";
 import { CoinNews } from "@/lib/api/news/getCoinNews";
+import { decodeHtmlEntities } from '@/utils/markdown';
 
 interface Props {
   title: string;
@@ -20,9 +21,9 @@ export function TopicSection({ title, news }: Props) {
               <Link
                 href={`/news/${item.id}`}
                 className="block cursor-pointer rounded-md px-2 py-1 transition-colors hover:bg-gray-100 truncate overflow-hidden whitespace-nowrap"
-                title={item.title.rendered}
+                title={decodeHtmlEntities(item.title.rendered)}
               >
-                {index + 1}. {item.title.rendered}
+                {index + 1}. {decodeHtmlEntities(item.title.rendered)}
               </Link>
             </li>
           ))}
