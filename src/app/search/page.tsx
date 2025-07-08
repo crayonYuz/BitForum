@@ -2,14 +2,15 @@
 
 import { useSearchParams, useRouter } from 'next/navigation'
 import { useQuery } from '@tanstack/react-query'
-import { useMemo, useState, Suspense } from 'react'
+import { useMemo, useState, useEffect, Suspense } from 'react'
 
-import { getSearchResults } from '@/lib/api/search/getSearchResults'
+import { getPosts, Post } from '@/lib/api/post/getPosts'
 import { getCoinNews } from '@/lib/api/news/getCoinNews'
 import { getUSStockNews } from '@/lib/api/news/getUSStockNews'
 
-import { Post, SearchItem } from '@/types/post'
+import { SearchItem } from '@/types/post'
 import { Navbar } from '@/components/main/Navbar'
+import { decodeHtmlEntities, stripHtmlTags, stripMarkdown } from '@/utils/markdown'
 
 const TABS = [
     { key: 'news', label: '뉴스' },
@@ -21,15 +22,24 @@ function SearchPage() {
     const router = useRouter()
 
     const initialQ = searchParams.get('q') || ''
+    const initialBoard = searchParams.get('board') || 'news'
+
     const [query, setQuery] = useState(initialQ)
     const [searchTerm, setSearchTerm] = useState(initialQ)
+    const [board, setBoard] = useState(initialBoard)
 
-    const board = searchParams.get('board') || 'news'
+    useEffect(() => {
+        const newQ = searchParams.get('q') || ''
+        const newBoard = searchParams.get('board') || 'news'
+        setSearchTerm(newQ)
+        setQuery(newQ)
+        setBoard(newBoard)
+    }, [searchParams])
 
-    const { data: communityResults, isLoading } = useQuery<Post[]>({
-        queryKey: ['searchResults', searchTerm, board],
-        queryFn: () => getSearchResults({ q: searchTerm, board }),
-        enabled: !!searchTerm && board === 'community',
+    const { data: allPosts = [], isLoading: isCommunityLoading } = useQuery<Post[]>({
+        queryKey: ['posts'],
+        queryFn: getPosts,
+        enabled: board === 'community',
     })
 
     const { data: coinNews = [] } = useQuery({
@@ -45,21 +55,28 @@ function SearchPage() {
     const results = useMemo(() => {
         if (!searchTerm) return []
 
-        if (board === 'community') return communityResults ?? []
+        if (board === 'community') {
+            const lower = searchTerm.toLowerCase()
+            return allPosts.filter(
+                (post) =>
+                    post.title.toLowerCase().includes(lower) ||
+                    post.content.toLowerCase().includes(lower)
+            )
+        }
 
         const keyword = searchTerm.toLowerCase()
         const allNews = [...coinNews, ...usStockNews]
 
-        return allNews.filter((item) =>
-            item.title.rendered.toLowerCase().includes(keyword) ||
-            item.content.rendered.toLowerCase().includes(keyword)
+        return allNews.filter(
+            (item) =>
+                item.title.rendered.toLowerCase().includes(keyword) ||
+                item.content.rendered.toLowerCase().includes(keyword)
         )
-    }, [searchTerm, board, communityResults, coinNews, usStockNews])
+    }, [searchTerm, board, allPosts, coinNews, usStockNews])
 
     const handleSearch = (e: React.FormEvent) => {
         e.preventDefault()
         router.push(`/search?q=${encodeURIComponent(query)}&board=${board}`)
-        setSearchTerm(query)
     }
 
     const handleTabClick = (tab: string) => {
@@ -67,8 +84,8 @@ function SearchPage() {
     }
 
     const handleItemClick = (item: SearchItem) => {
-        if ('link' in item) {
-            router.push(item.link)
+        if (board === 'news') {
+            router.push(`/news/${item.id}`)
         } else {
             router.push(`/community/${item.id}`)
         }
@@ -78,7 +95,10 @@ function SearchPage() {
         <>
             <Navbar />
             <div className="pt-24 max-w-4xl mx-auto px-4">
-                <form onSubmit={handleSearch} className="flex items-center mb-4 border border-gray-300 rounded-md px-3 py-2">
+                <form
+                    onSubmit={handleSearch}
+                    className="flex items-center mb-4 border border-gray-300 rounded-md px-3 py-2"
+                >
                     <input
                         type="text"
                         className="flex-1 outline-none"
@@ -86,7 +106,10 @@ function SearchPage() {
                         value={query}
                         onChange={(e) => setQuery(e.target.value)}
                     />
-                    <button type="submit" className="text-sm text-blue-600 font-semibold ml-2 cursor-pointer">
+                    <button
+                        type="submit"
+                        className="text-sm text-blue-600 font-semibold ml-2 cursor-pointer"
+                    >
                         검색
                     </button>
                 </form>
@@ -106,30 +129,37 @@ function SearchPage() {
                     ))}
                 </div>
 
-                {isLoading && board === 'community' ? (
+                {isCommunityLoading && board === 'community' ? (
                     <div className="space-y-4">
                         {Array.from({ length: 6 }).map((_, idx) => (
-                            <div key={idx} className="h-24 bg-gray-200 animate-pulse rounded-lg" />
+                            <div
+                                key={idx}
+                                className="h-24 bg-gray-200 animate-pulse rounded-lg"
+                            />
                         ))}
                     </div>
                 ) : results.length === 0 ? (
                     <p className="text-gray-500">검색 결과가 없어요</p>
                 ) : (
                     <ul className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        {(results as SearchItem[]).map((item) => (
+                        {(results as unknown as SearchItem[]).map((item) => (
                             <li
                                 key={item.id}
                                 onClick={() => handleItemClick(item)}
                                 className="border p-4 rounded-xl shadow-sm hover:shadow-md transition cursor-pointer"
                             >
                                 <h2 className="font-bold text-lg">
-                                    {'title' in item ? (typeof item.title === 'string' ? item.title : item.title.rendered) : ''}
+                                    {'title' in item
+                                        ? typeof item.title === 'string'
+                                            ? item.title
+                                            : item.title.rendered
+                                        : ''}
                                 </h2>
                                 <p className="text-sm text-gray-600 line-clamp-2">
                                     {'content' in item
                                         ? typeof item.content === 'string'
-                                            ? item.content
-                                            : item.content.rendered.replace(/<[^>]+>/g, '')
+                                            ? decodeHtmlEntities(stripMarkdown(stripHtmlTags(item.content)))
+                                            : decodeHtmlEntities(stripHtmlTags(item.content.rendered))
                                         : ''}
                                 </p>
                                 <p className="text-xs text-gray-400 mt-2">
